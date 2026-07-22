@@ -1,8 +1,16 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  unlinkSync,
+} from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline";
 import { stdin as input, stdout as output } from "node:process";
+import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -87,27 +95,35 @@ function dateStr(): string {
 
 function readCargoVersion(): string {
   const raw = readFileSync(CARGO_TOML, "utf-8");
-  const m = raw.match(/^version\s*=\s*"([^"]+)"/m);
-  if (!m) throw new Error("Could not read workspace version from Cargo.toml");
-  return m[1] as string;
+  const doc = parseToml(raw) as { workspace?: { package?: { version?: string } } };
+  const version = doc.workspace?.package?.version;
+  if (!version) throw new Error("Could not read workspace version from Cargo.toml");
+  return version;
 }
 
 function writeCargoVersion(version: string) {
   const raw = readFileSync(CARGO_TOML, "utf-8");
-  writeFileSync(CARGO_TOML, raw.replace(/^version\s*=\s*"([^"]+)"/m, `version = "${version}"`));
+  const doc = parseToml(raw) as Record<string, unknown>;
+  const wp = (doc as Record<string, Record<string, unknown>>).workspace?.package as
+    | Record<string, unknown>
+    | undefined;
+  if (wp) wp.version = version;
+  writeFileSync(CARGO_TOML, stringifyToml(doc));
   console.log(`  Cargo.toml → ${version}`);
 }
 
 function readNpmVersion(pkgJson: string): string {
   const raw = readFileSync(pkgJson, "utf-8");
-  const m = raw.match(/"version":\s*"([^"]+)"/);
-  if (!m) throw new Error(`Could not read version from ${pkgJson}`);
-  return m[1] as string;
+  const pkg = JSON.parse(raw) as { version?: string };
+  if (!pkg.version) throw new Error(`Could not read version from ${pkgJson}`);
+  return pkg.version;
 }
 
 function writeNpmVersion(pkgJson: string, version: string) {
   const raw = readFileSync(pkgJson, "utf-8");
-  writeFileSync(pkgJson, raw.replace(/"version":\s*"([^"]+)"/, `"version": "${version}"`));
+  const pkg = JSON.parse(raw) as Record<string, unknown>;
+  pkg.version = version;
+  writeFileSync(pkgJson, JSON.stringify(pkg, null, 2) + "\n");
   console.log(`  ${pkgJson} → ${version}`);
 }
 
@@ -132,7 +148,10 @@ function updateChangelog(newSection: string) {
   if (existsSync(CHANGELOG)) {
     const existing = readFileSync(CHANGELOG, "utf-8");
     const header = "# Changelog\n\n";
-    writeFileSync(CHANGELOG, header + newSection + "\n" + existing.replace(/^# Changelog\n\n?/, ""));
+    writeFileSync(
+      CHANGELOG,
+      header + newSection + "\n" + existing.replace(/^# Changelog\n\n?/, ""),
+    );
   } else {
     writeFileSync(CHANGELOG, `# Changelog\n\n${newSection}\n`);
   }
@@ -151,7 +170,12 @@ async function cmdAdd() {
     ? (bumpRaw as "patch" | "minor" | "major")
     : "patch";
   const pkgRaw = (await ask("Packages (comma-separated, empty=all): ")).trim();
-  const packages = pkgRaw ? pkgRaw.split(",").map((s) => s.trim()).filter(Boolean) : [];
+  const packages = pkgRaw
+    ? pkgRaw
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
   const body = (await ask("Changelog description: ")).trim();
   rl.close();
 
@@ -163,11 +187,10 @@ async function cmdAdd() {
   if (!existsSync(CHANGES_DIR)) mkdirSync(CHANGES_DIR, { recursive: true });
   const ts = Date.now();
   const file = join(CHANGES_DIR, `${ts}.md`);
-  const pkgYaml = packages.length ? `packages:\n${packages.map((p) => `  - ${p}`).join("\n")}` : `packages: []`;
-  writeFileSync(
-    file,
-    `---\nbump: ${bump}\n${pkgYaml}\n---\n\n${body}\n`,
-  );
+  const pkgYaml = packages.length
+    ? `packages:\n${packages.map((p) => `  - ${p}`).join("\n")}`
+    : `packages: []`;
+  writeFileSync(file, `---\nbump: ${bump}\n${pkgYaml}\n---\n\n${body}\n`);
   console.log(`\nCreated: .changes/${ts}.md`);
 }
 
