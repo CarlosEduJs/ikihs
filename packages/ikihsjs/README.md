@@ -38,8 +38,8 @@ import { createHighlighter, Highlighter } from "ikihsjs";
 import type { ThemeRegistration, ThemedToken } from "ikihsjs/shiki-types";
 
 const h: Highlighter = await createHighlighter({
-  themes: [theme],          // ThemeRegistration[]
-  langs: ["rust", "js"],     // string[]
+  themes: [theme], // ThemeRegistration[]
+  langs: ["rust", "js"], // string[]
 });
 
 // Tokenize code
@@ -52,9 +52,9 @@ const html: string = h.codeToHtml(source, { lang, theme });
 // Load resources dynamically
 h.loadLanguage("python");
 h.loadTheme(myTheme);
-h.getLoadedLanguages();   // string[]
-h.getLoadedThemes();      // string[]
-h.getTheme("dark-plus");  // ThemeRegistration
+h.getLoadedLanguages(); // string[]
+h.getLoadedThemes(); // string[]
+h.getTheme("dark-plus"); // ThemeRegistration
 ```
 
 ## How it works

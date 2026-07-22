@@ -38,15 +38,15 @@ The HTML report shows the source side by side with color-coded diffs:
 
 ## Output metrics
 
-| Metric         | Meaning                                                    |
-| -------------- | ---------------------------------------------------------- |
-| `exact`        | Byte positions where Ikihs and Shiki agree on color        |
-| `color_diff`   | Byte positions where colors differ                         |
-| `offset_diff`  | Byte position in one output but not the other              |
-| `extra`        | Tokens in Ikihs that do not exist in Shiki                 |
-| `missing`      | Tokens in Shiki that do not exist in Ikihs                 |
-| `total`        | Byte positions with a color in either output               |
-| `score`        | `exact / total * 100` (100% if no data)                    |
+| Metric        | Meaning                                             |
+| ------------- | --------------------------------------------------- |
+| `exact`       | Byte positions where Ikihs and Shiki agree on color |
+| `color_diff`  | Byte positions where colors differ                  |
+| `offset_diff` | Byte position in one output but not the other       |
+| `extra`       | Tokens in Ikihs that do not exist in Shiki          |
+| `missing`     | Tokens in Shiki that do not exist in Ikihs          |
+| `total`       | Byte positions with a color in either output        |
+| `score`       | `exact / total * 100` (100% if no data)             |
 
 ## Fixtures
 

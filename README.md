@@ -42,14 +42,14 @@ Ikihs compares each byte position against Shiki v4.
 A color mismatch counts as a failure.
 The current score is 96%.
 
-| Language         | Score  |
-| ---------------- | ------ |
-| Python decorator | 100%   |
-| Rust hello world | 98%    |
-| Rust comments    | 98%    |
-| JS functions     | 96%    |
-| Python functions | 94%    |
-| JS classes       | 90%    |
+| Language         | Score |
+| ---------------- | ----- |
+| Python decorator | 100%  |
+| Rust hello world | 98%   |
+| Rust comments    | 98%   |
+| JS functions     | 96%   |
+| Python functions | 94%   |
+| JS classes       | 90%   |
 
 The remaining 4% are grammar differences between Sublime Text grammars (Syntect) and VS Code grammars (Shiki).
 For example, `constructor` becomes `entity.name.function`.

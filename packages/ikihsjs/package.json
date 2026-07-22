@@ -1,14 +1,47 @@
 {
   "name": "ikihsjs",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "private": false,
+  "description": "Native Node.js syntax highlighting — Shiki-compatible API, Rust-powered performance",
+  "keywords": [
+    "highlighter",
+    "napi",
+    "rust",
+    "shiki",
+    "syntax-highlighting",
+    "textmate"
+  ],
+  "homepage": "https://github.com/carlosedujs/ikihs",
+  "bugs": {
+    "url": "https://github.com/carlosedujs/ikihs/issues"
+  },
+  "license": "MIT",
+  "author": "Ikihs contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlosedujs/ikihs"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "shiki-types.d.ts",
+    "ikihsjs.*.node"
+  ],
   "main": "index.js",
   "types": "index.d.ts",
   "exports": {
     ".": {
       "import": "./index.mjs",
       "require": "./index.js"
+    },
+    "./shiki-types": {
+      "types": "./shiki-types.d.ts"
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "napi build --release --platform",
@@ -25,5 +58,8 @@
     "targets": [
       "x86_64-unknown-linux-gnu"
     ]
+  },
+  "engines": {
+    "node": ">= 20"
   }
 }

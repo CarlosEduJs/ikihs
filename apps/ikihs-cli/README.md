@@ -42,11 +42,11 @@ ikihs highlight app.js --lang javascript --theme ~/themes/my-theme.json
 
 **Arguments**
 
-| Argument       | Description                                   |
-| -------------- | --------------------------------------------- |
-| `source`       | Path to the source file (use `-` for stdin)   |
-| `-l, --lang`   | Language token for grammar lookup (default: rs) |
-| `-t, --theme`  | Path to the VS Code theme JSON (default: dark-plus.json) |
+| Argument      | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `source`      | Path to the source file (use `-` for stdin)              |
+| `-l, --lang`  | Language token for grammar lookup (default: rs)          |
+| `-t, --theme` | Path to the VS Code theme JSON (default: dark-plus.json) |
 
 **Output**
 

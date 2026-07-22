@@ -161,19 +161,19 @@ The JS API must mirror the Rust API closely.
 
 ## Roadmap Shape
 
-| v1 (build-time)                                                      | v2+ (editor and runtime-oriented)                                        |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `.tmTheme` and VS Code `theme.json` parsing                          | —                                                                        |
-| Scope mapper (Layer 2)                                               | Alternate or additional engine (for example, tree-sitter)                |
-| Syntect-based highlight                                              | —                                                                        |
-| Low-allocation tuning (best-effort)                                  | Guaranteed zero-alloc mode                                               |
-| Styled-span and CSS-class output modes                               | —                                                                        |
-| Compiled and embedded themes (Rust structs)                          | —                                                                        |
-| `ikihs highlight` CLI                                                | —                                                                        |
-| Zola and mdBook integration                                          | Tauri, Leptos, and Axum runtime integration                              |
-| `ikihsjs` npm package (Node, through napi-rs)                        | `ikihsjs` browser build (WASM, through wasm-bindgen)                     |
-| —                                                                    | Incremental highlight                                                    |
-| —                                                                    | Semantic token injection API                                             |
+| v1 (build-time)                               | v2+ (editor and runtime-oriented)                         |
+| --------------------------------------------- | --------------------------------------------------------- |
+| `.tmTheme` and VS Code `theme.json` parsing   | —                                                         |
+| Scope mapper (Layer 2)                        | Alternate or additional engine (for example, tree-sitter) |
+| Syntect-based highlight                       | —                                                         |
+| Low-allocation tuning (best-effort)           | Guaranteed zero-alloc mode                                |
+| Styled-span and CSS-class output modes        | —                                                         |
+| Compiled and embedded themes (Rust structs)   | —                                                         |
+| `ikihs highlight` CLI                         | —                                                         |
+| Zola and mdBook integration                   | Tauri, Leptos, and Axum runtime integration               |
+| `ikihsjs` npm package (Node, through napi-rs) | `ikihsjs` browser build (WASM, through wasm-bindgen)      |
+| —                                             | Incremental highlight                                     |
+| —                                             | Semantic token injection API                              |
 
 ## Crate Structure
 
