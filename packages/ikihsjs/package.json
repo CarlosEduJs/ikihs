@@ -19,7 +19,8 @@
   "author": "Ikihs contributors",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carlosedujs/ikihs"
+    "url": "git+https://github.com/carlosedujs/ikihs.git",
+    "directory": "packages/ikihsjs"
   },
   "files": [
     "index.js",
