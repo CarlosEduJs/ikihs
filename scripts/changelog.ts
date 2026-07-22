@@ -237,28 +237,32 @@ function cmdVersion() {
 async function cmdPublish() {
   const npmPkg = join(ROOT, "packages/ikihsjs/package.json");
   const npmVersion = readNpmVersion(npmPkg);
-
   const { execSync } = await import("node:child_process");
 
-  // Check if this version is already published on npm
+  // Debug: check package info
   let published = "";
   try {
-    published = execSync(`npm view ikihsjs version`, { encoding: "utf-8" }).trim();
+    published = execSync(`npm view ikihsjs version 2>&1 || true`, { encoding: "utf-8" }).trim();
   } catch {
-    // package not found on registry yet
+    // not found
   }
+  console.log(`npm view ikihsjs: ${published || "(not found)"}`);
 
   if (published === npmVersion) {
     console.log(`ikihsjs@${npmVersion} already published on npm — nothing to do`);
     return;
   }
 
-  console.log(`Publishing ikihsjs@${npmVersion}...`);
+  console.log(`Publishing ${npmPkg} version=${npmVersion}...`);
+
+  // Print key env info for debugging OIDC
+  console.log(`NODE_AUTH_TOKEN set: ${!!process.env.NODE_AUTH_TOKEN}`);
+  console.log(`npmrc: ${execSync("npm config list", { encoding: "utf-8" }).trim()}`);
 
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
   const tag = `v${npmVersion}`;
-  execSync("npm publish --access public --provenance", {
+  execSync("npm publish --access public --provenance --loglevel verbose", {
     cwd: join(ROOT, "packages/ikihsjs"),
     stdio: "inherit",
   });
