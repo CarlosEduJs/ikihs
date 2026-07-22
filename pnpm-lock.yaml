@@ -30,6 +30,9 @@ importers:
       oxlint:
         specifier: ^1.72.0
         version: 1.74.0
+      tsx:
+        specifier: ^4.23.1
+        version: 4.23.1
       turbo:
         specifier: ^2.10.2
         version: 2.10.5

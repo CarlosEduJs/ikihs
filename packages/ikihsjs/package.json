@@ -1,6 +1,6 @@
 {
   "name": "ikihsjs",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": false,
   "description": "Native Node.js syntax highlighting — Shiki-compatible API, Rust-powered performance",
   "keywords": [
