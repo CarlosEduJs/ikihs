@@ -1,0 +1,50 @@
+name: Version Packages
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Check for changelog entries
+        id: check
+        run: |
+          count=$(ls .changes/*.md 2>/dev/null | grep -v .gitkeep | wc -l)
+          echo "count=$count"
+          echo "has_changes=$([ "$count" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Version packages
+        if: steps.check.outputs.has_changes == 'true'
+        run: pnpm changelog version
+
+      - uses: peter-evans/create-pull-request@v7
+        if: steps.check.outputs.has_changes == 'true'
+        with:
+          title: "Version Packages"
+          branch: "version-packages"
+          commit-message: "chore: bump versions"
+          body: |
+            This PR bumps package versions based on changelog entries in `.changes/`.
+
+            After merging, CI will publish the updated packages to npm and create a git tag.
+          delete-branch: true
+          token: ${{ secrets.GITHUB_TOKEN }}
