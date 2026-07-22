@@ -239,30 +239,34 @@ async function cmdPublish() {
   const npmVersion = readNpmVersion(npmPkg);
   const { execSync } = await import("node:child_process");
 
-  // Debug: check package info
+  // Check if this version is already published on npm
   let published = "";
   try {
-    published = execSync(`npm view ikihsjs version 2>&1 || true`, { encoding: "utf-8" }).trim();
+    published = execSync("npm view ikihsjs version", { encoding: "utf-8" }).trim();
   } catch {
-    // not found
+    // not found on registry yet
   }
-  console.log(`npm view ikihsjs: ${published || "(not found)"}`);
 
   if (published === npmVersion) {
     console.log(`ikihsjs@${npmVersion} already published on npm — nothing to do`);
     return;
   }
 
-  console.log(`Publishing ${npmPkg} version=${npmVersion}...`);
+  console.log(`Publishing ikihsjs@${npmVersion}...`);
 
-  // Print key env info for debugging OIDC
-  console.log(`NODE_AUTH_TOKEN set: ${!!process.env.NODE_AUTH_TOKEN}`);
-  console.log(`npmrc: ${execSync("npm config list", { encoding: "utf-8" }).trim()}`);
+  // Diagnostics requested by npm support
+  execSync("node --version", { stdio: "inherit" });
+  execSync("npm --version", { stdio: "inherit" });
+  try { execSync("npm i -g npm@11", { stdio: "inherit" }); } catch {}
+  execSync("npm --version", { stdio: "inherit" });
+  execSync("npm config get registry", { stdio: "inherit" });
+  execSync("npm config list -l", { stdio: "inherit" });
+  execSync("npm ping --registry=https://registry.npmjs.org", { stdio: "inherit" });
 
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
   const tag = `v${npmVersion}`;
-  execSync("npm publish --workspace packages/ikihsjs --access public --provenance --loglevel verbose", { // test with workspace flag
+  execSync("npm publish --workspace packages/ikihsjs --access public --provenance --loglevel verbose", {
     cwd: ROOT,
     stdio: "inherit",
   });
