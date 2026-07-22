@@ -240,16 +240,17 @@ async function cmdPublish() {
   const tag = `v${npmVersion}`;
 
   const { execSync } = await import("node:child_process");
-  let tagExists = false;
+
+  // Compare against the latest version tag. If they match, version hasn't changed.
+  let latestTag = "";
   try {
-    const output = execSync(`git tag -l "${tag}"`, { encoding: "utf-8" });
-    tagExists = output.trim() === tag;
+    latestTag = execSync("git describe --tags --abbrev=0", { encoding: "utf-8" }).trim();
   } catch {
-    // git command failed, assume no tag
+    // no tags yet — first release
   }
 
-  if (tagExists) {
-    console.log(`Tag ${tag} already exists — nothing to publish`);
+  if (latestTag === tag) {
+    console.log(`Latest tag ${latestTag} matches current version — nothing to publish`);
     return;
   }
 

@@ -34,5 +34,5 @@ jobs:
 
       - name: Publish if version changed
         run: pnpm changelog publish
-        env: 
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
