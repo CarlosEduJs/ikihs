@@ -26,4 +26,3 @@
 
 - **`ikihsjs`** (`0.1.0`) — Native Node.js addon through napi-rs. The API matches Shiki v4. It has platform binaries for `x86_64-unknown-linux-gnu`. It has 11 tests. TypeScript declarations are in `shiki-types.d.ts`.
 - **`@ikihs/compare`** (`0.1.0`) — Internal comparison harness. The `compare` subcommand runs Ikihs and Shiki side by side with a byte-level diff. `gen-fixtures` regenerates `.shiki.json` references from Shiki v4. It has an HTML report generator.
-

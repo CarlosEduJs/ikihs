@@ -258,7 +258,7 @@ async function cmdPublish() {
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
   const tag = `v${npmVersion}`;
-  execSync("npm publish", {
+  execSync("npm publish --access public --provenance", {
     cwd: join(ROOT, "packages/ikihsjs"),
     stdio: "inherit",
   });
