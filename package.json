@@ -1,0 +1,29 @@
+{
+  "name": "ikihs",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "check": "oxlint && oxfmt --write"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "shiki": "^4.3.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@ikihs/config": "workspace:*",
+    "@types/node": "^22.13.14",
+    "oxfmt": "^0.57.0",
+    "oxlint": "^1.72.0",
+    "turbo": "^2.10.2",
+    "typescript": "^7"
+  },
+  "packageManager": "pnpm@11.11.0"
+}

@@ -1,0 +1,12 @@
+[package]
+name = "ikihs-themes"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ikihs-core = { path = "../ikihs-core" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+quick-xml = "0.37"

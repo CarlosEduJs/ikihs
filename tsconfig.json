@@ -1,0 +1,4 @@
+{
+  "extends": "@ikihs/config/tsconfig.base.json",
+  "exclude": ["packages/ikihsjs", "node_modules"]
+}

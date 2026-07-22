@@ -1,0 +1,184 @@
+{
+  "language": "python",
+  "tokens": [
+    [
+      {
+        "content": "@dataclass",
+        "offset": 0,
+        "color": "#DCDCAA"
+      }
+    ],
+    [
+      {
+        "content": "class",
+        "offset": 11,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 16,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "Point",
+        "offset": 17,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": ":",
+        "offset": 22,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    x: ",
+        "offset": 24,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "float",
+        "offset": 31,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " = ",
+        "offset": 36,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "0.0",
+        "offset": 39,
+        "color": "#B5CEA8"
+      }
+    ],
+    [
+      {
+        "content": "    y: ",
+        "offset": 43,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "float",
+        "offset": 50,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " = ",
+        "offset": 55,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "0.0",
+        "offset": 58,
+        "color": "#B5CEA8"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "    ",
+        "offset": 63,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "def",
+        "offset": 67,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 70,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "__repr__",
+        "offset": 71,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 79,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "self",
+        "offset": 80,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "):",
+        "offset": 84,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "        ",
+        "offset": 87,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "return",
+        "offset": 95,
+        "color": "#C586C0"
+      },
+      {
+        "content": " ",
+        "offset": 101,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "f",
+        "offset": 102,
+        "color": "#569CD6"
+      },
+      {
+        "content": "\"Point(",
+        "offset": 103,
+        "color": "#CE9178"
+      },
+      {
+        "content": "{self",
+        "offset": 110,
+        "color": "#569CD6"
+      },
+      {
+        "content": ".x",
+        "offset": 115,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "}",
+        "offset": 117,
+        "color": "#569CD6"
+      },
+      {
+        "content": ", ",
+        "offset": 118,
+        "color": "#CE9178"
+      },
+      {
+        "content": "{self",
+        "offset": 120,
+        "color": "#569CD6"
+      },
+      {
+        "content": ".y",
+        "offset": 125,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "}",
+        "offset": 127,
+        "color": "#569CD6"
+      },
+      {
+        "content": ")\"",
+        "offset": 128,
+        "color": "#CE9178"
+      }
+    ],
+    []
+  ]
+}

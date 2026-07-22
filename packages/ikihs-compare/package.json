@@ -1,0 +1,17 @@
+{
+  "name": "@ikihs/compare",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compare": "tsx src/cli.ts",
+    "gen-fixtures": "tsx src/generate-fixtures.ts"
+  },
+  "dependencies": {
+    "shiki": "^4",
+    "tsx": "^4"
+  },
+  "devDependencies": {
+    "@types/node": "^22"
+  }
+}

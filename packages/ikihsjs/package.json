@@ -1,0 +1,29 @@
+{
+  "name": "ikihsjs",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "scripts": {
+    "build": "napi build --release --platform",
+    "build:debug": "napi build --platform",
+    "test": "node --import tsx --test __test__/*.spec.ts",
+    "test:js": "node --test __test__/*.spec.mjs"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.0.0",
+    "tsx": "^4"
+  },
+  "napi": {
+    "binaryName": "ikihsjs",
+    "targets": [
+      "x86_64-unknown-linux-gnu"
+    ]
+  }
+}

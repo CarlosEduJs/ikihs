@@ -1,0 +1,99 @@
+{
+  "language": "rust",
+  "tokens": [
+    [
+      {
+        "content": "fn",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 2,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "main",
+        "offset": 3,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "() {",
+        "offset": 7,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 12,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "let",
+        "offset": 16,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 19,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "x",
+        "offset": 20,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " = ",
+        "offset": 21,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "42",
+        "offset": 24,
+        "color": "#B5CEA8"
+      },
+      {
+        "content": ";",
+        "offset": 26,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 28,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "println!",
+        "offset": 32,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 40,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"hello world\"",
+        "offset": 41,
+        "color": "#CE9178"
+      },
+      {
+        "content": ");",
+        "offset": 54,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 57,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

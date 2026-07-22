@@ -1,0 +1,23 @@
+[package]
+name = "ikihsjs"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "3", features = ["serde-json", "napi8"] }
+napi-derive = "3"
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+
+ikihs-core = { path = "../../crates/ikihs-core" }
+ikihs-themes = { path = "../../crates/ikihs-themes" }
+ikihs-engine-syntect = { path = "../../crates/ikihs-engine-syntect" }
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true

@@ -1,0 +1,64 @@
+{
+  "language": "rust",
+  "tokens": [
+    [
+      {
+        "content": "// single line comment",
+        "offset": 0,
+        "color": "#6A9955"
+      }
+    ],
+    [
+      {
+        "content": "let",
+        "offset": 23,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 26,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "x",
+        "offset": 27,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " = ",
+        "offset": 28,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "1",
+        "offset": 31,
+        "color": "#B5CEA8"
+      },
+      {
+        "content": "; ",
+        "offset": 32,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "// inline comment",
+        "offset": 34,
+        "color": "#6A9955"
+      }
+    ],
+    [
+      {
+        "content": "/* multi",
+        "offset": 52,
+        "color": "#6A9955"
+      }
+    ],
+    [
+      {
+        "content": "   line */",
+        "offset": 61,
+        "color": "#6A9955"
+      }
+    ],
+    []
+  ]
+}

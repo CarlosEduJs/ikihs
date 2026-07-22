@@ -1,0 +1,112 @@
+{
+  "language": "python",
+  "tokens": [
+    [
+      {
+        "content": "def",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 3,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "greet",
+        "offset": 4,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 9,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 10,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 14,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "str",
+        "offset": 16,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": ") -> ",
+        "offset": 19,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "str",
+        "offset": 24,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": ":",
+        "offset": 27,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    message = ",
+        "offset": 29,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "f",
+        "offset": 43,
+        "color": "#569CD6"
+      },
+      {
+        "content": "\"Hello, ",
+        "offset": 44,
+        "color": "#CE9178"
+      },
+      {
+        "content": "{",
+        "offset": 52,
+        "color": "#569CD6"
+      },
+      {
+        "content": "name",
+        "offset": 53,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "}",
+        "offset": 57,
+        "color": "#569CD6"
+      },
+      {
+        "content": "!\"",
+        "offset": 58,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 61,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "return",
+        "offset": 65,
+        "color": "#C586C0"
+      },
+      {
+        "content": " message.upper()",
+        "offset": 71,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

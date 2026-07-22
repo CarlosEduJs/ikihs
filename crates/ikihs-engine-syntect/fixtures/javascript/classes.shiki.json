@@ -1,0 +1,197 @@
+{
+  "language": "javascript",
+  "tokens": [
+    [
+      {
+        "content": "class",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 5,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "Animal",
+        "offset": 6,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " {",
+        "offset": 12,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 15,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "constructor",
+        "offset": 17,
+        "color": "#569CD6"
+      },
+      {
+        "content": "(",
+        "offset": 28,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 29,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ") {",
+        "offset": 33,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 37,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "this",
+        "offset": 41,
+        "color": "#569CD6"
+      },
+      {
+        "content": ".",
+        "offset": 45,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 46,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " = ",
+        "offset": 50,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 53,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ";",
+        "offset": 57,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  }",
+        "offset": 59,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 63,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "speak",
+        "offset": 65,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "() {",
+        "offset": 70,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 75,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "console",
+        "offset": 79,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ".",
+        "offset": 86,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "log",
+        "offset": 87,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 90,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "`",
+        "offset": 91,
+        "color": "#CE9178"
+      },
+      {
+        "content": "${",
+        "offset": 92,
+        "color": "#569CD6"
+      },
+      {
+        "content": "this",
+        "offset": 94,
+        "color": "#569CD6"
+      },
+      {
+        "content": ".",
+        "offset": 98,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 99,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "}",
+        "offset": 103,
+        "color": "#569CD6"
+      },
+      {
+        "content": " speaks`",
+        "offset": 104,
+        "color": "#CE9178"
+      },
+      {
+        "content": ");",
+        "offset": 112,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  }",
+        "offset": 115,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 119,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

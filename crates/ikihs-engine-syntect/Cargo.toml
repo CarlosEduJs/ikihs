@@ -1,0 +1,19 @@
+[package]
+name = "ikihs-engine-syntect"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ikihs-core = { path = "../ikihs-core" }
+thiserror.workspace = true
+
+[dependencies.syntect]
+version = "5"
+default-features = false
+features = ["default-onig", "plist-load", "default-syntaxes"]
+
+[dev-dependencies]
+ikihs-themes = { path = "../ikihs-themes" }
+serde.workspace = true
+serde_json.workspace = true

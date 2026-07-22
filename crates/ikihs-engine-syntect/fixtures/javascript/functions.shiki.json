@@ -1,0 +1,139 @@
+{
+  "language": "javascript",
+  "tokens": [
+    [
+      {
+        "content": "function",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 8,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "greet",
+        "offset": 9,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 14,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 15,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ") {",
+        "offset": 19,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 23,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "const",
+        "offset": 25,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 30,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "msg",
+        "offset": 31,
+        "color": "#4FC1FF"
+      },
+      {
+        "content": " = ",
+        "offset": 34,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "`Hello, ",
+        "offset": 37,
+        "color": "#CE9178"
+      },
+      {
+        "content": "${",
+        "offset": 45,
+        "color": "#569CD6"
+      },
+      {
+        "content": "name",
+        "offset": 47,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "}",
+        "offset": 51,
+        "color": "#569CD6"
+      },
+      {
+        "content": "!`",
+        "offset": 52,
+        "color": "#CE9178"
+      },
+      {
+        "content": ";",
+        "offset": 54,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 56,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "return",
+        "offset": 58,
+        "color": "#C586C0"
+      },
+      {
+        "content": " ",
+        "offset": 64,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "msg",
+        "offset": 65,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ".",
+        "offset": 68,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "length",
+        "offset": 69,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ";",
+        "offset": 75,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 77,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

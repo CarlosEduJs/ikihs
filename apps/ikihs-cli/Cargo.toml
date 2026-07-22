@@ -1,0 +1,12 @@
+[package]
+name = "ikihs-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ikihs-core = { path = "../../crates/ikihs-core" }
+ikihs-themes = { path = "../../crates/ikihs-themes" }
+ikihs-engine-syntect = { path = "../../crates/ikihs-engine-syntect" }
+clap = { version = "4", features = ["derive"] }
+serde_json.workspace = true

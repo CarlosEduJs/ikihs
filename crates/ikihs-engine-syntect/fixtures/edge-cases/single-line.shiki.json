@@ -1,0 +1,38 @@
+{
+  "language": "rust",
+  "tokens": [
+    [
+      {
+        "content": "let",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 3,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "x",
+        "offset": 4,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " = ",
+        "offset": 5,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "1",
+        "offset": 8,
+        "color": "#B5CEA8"
+      },
+      {
+        "content": ";",
+        "offset": 9,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

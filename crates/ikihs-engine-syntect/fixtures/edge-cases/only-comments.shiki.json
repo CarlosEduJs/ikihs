@@ -1,0 +1,20 @@
+{
+  "language": "rust",
+  "tokens": [
+    [
+      {
+        "content": "// just a comment",
+        "offset": 0,
+        "color": "#6A9955"
+      }
+    ],
+    [
+      {
+        "content": "// another one",
+        "offset": 18,
+        "color": "#6A9955"
+      }
+    ],
+    []
+  ]
+}
