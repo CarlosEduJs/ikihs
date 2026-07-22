@@ -237,20 +237,19 @@ function cmdVersion() {
 async function cmdPublish() {
   const npmPkg = join(ROOT, "packages/ikihsjs/package.json");
   const npmVersion = readNpmVersion(npmPkg);
-  const tag = `v${npmVersion}`;
 
   const { execSync } = await import("node:child_process");
 
-  // Compare against the latest version tag. If they match, version hasn't changed.
-  let latestTag = "";
+  // Check if this version is already published on npm
+  let published = "";
   try {
-    latestTag = execSync("git describe --tags --abbrev=0", { encoding: "utf-8" }).trim();
+    published = execSync(`npm view ikihsjs version`, { encoding: "utf-8" }).trim();
   } catch {
-    // no tags yet — first release
+    // package not found on registry yet
   }
 
-  if (latestTag === tag) {
-    console.log(`Latest tag ${latestTag} matches current version — nothing to publish`);
+  if (published === npmVersion) {
+    console.log(`ikihsjs@${npmVersion} already published on npm — nothing to do`);
     return;
   }
 
@@ -258,6 +257,7 @@ async function cmdPublish() {
 
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
+  const tag = `v${npmVersion}`;
   execSync("npm publish", {
     cwd: join(ROOT, "packages/ikihsjs"),
     stdio: "inherit",
