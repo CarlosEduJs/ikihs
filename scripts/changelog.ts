@@ -260,7 +260,6 @@ async function cmdPublish() {
   execSync("npm publish", {
     cwd: join(ROOT, "packages/ikihsjs"),
     stdio: "inherit",
-    env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN || "" },
   });
 
   execSync(`git tag "${tag}"`, { stdio: "inherit" });

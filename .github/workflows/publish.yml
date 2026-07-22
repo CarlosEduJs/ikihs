@@ -32,11 +32,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Debug OIDC env
-        run: |
-          echo "ACTIONS_ID_TOKEN_REQUEST_URL set? -> ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
-          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set? -> ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}"
-
       - name: Publish if version changed
         run: pnpm changelog publish
         env: 
