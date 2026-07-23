@@ -315,6 +315,9 @@ fn compatibility_rules() -> Vec<ThemeItem> {
         // Shell: syntect scopes function calls as variable.function (→ variable blue)
         // but Shiki scopes them as support.function (→ function yellow #DCDCAA)
         (vec!["variable.function"], "#DCDCAA"),
+        // Shell flags: syntect scopes `-la` as variable.parameter.option (→ variable blue)
+        // but Shiki colors them as keyword (#569CD6)
+        (vec!["variable.parameter.option"], "#569CD6"),
 
     ];
 
@@ -635,7 +638,7 @@ mod tests {
         assert_eq!(syntect_theme.name, Some("empty".into()));
         assert!(syntect_theme.settings.foreground.is_none());
         assert!(syntect_theme.settings.background.is_none());
-        assert_eq!(syntect_theme.scopes.len(), 8);
+        assert_eq!(syntect_theme.scopes.len(), 9);
     }
 
     #[test]
@@ -677,8 +680,8 @@ mod tests {
                 a: 255
             })
         );
-        assert_eq!(syntect_theme.scopes.len(), 9);
-        assert_eq!(syntect_theme.scopes[8].scope.selectors.len(), 2);
+        assert_eq!(syntect_theme.scopes.len(), 10);
+        assert_eq!(syntect_theme.scopes[9].scope.selectors.len(), 2);
     }
 
     #[test]
