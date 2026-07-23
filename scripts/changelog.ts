@@ -254,6 +254,10 @@ async function cmdPublish() {
 
   console.log(`Publishing ikihsjs@${npmVersion}...`);
 
+  const pkgJson = JSON.parse(readFileSync(npmPkg, "utf-8"));
+  console.log(`package name: ${pkgJson.name}`);
+  console.log(`NODE_AUTH_TOKEN set: ${!!process.env.NODE_AUTH_TOKEN}`);
+
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
   const tag = `v${npmVersion}`;
@@ -264,7 +268,7 @@ async function cmdPublish() {
     });
   } catch {
     console.log("Provenance publish failed, falling back to NODE_AUTH_TOKEN...");
-    execSync("npm publish --workspace packages/ikihsjs --access public", {
+    execSync("npm publish --workspace packages/ikihsjs --access public --provenance=false", {
       cwd: ROOT,
       stdio: "inherit",
     });
