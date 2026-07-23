@@ -254,10 +254,10 @@ async function cmdPublish() {
   console.log(`Publishing ikihsjs@${npmVersion}...`);
 
   const npmDir = join(ROOT, "packages/ikihsjs");
-  const npmPkg: { napi?: { targets?: string[] } } = JSON.parse(
+  const pkgJson: { napi?: { targets?: string[] } } = JSON.parse(
     readFileSync(join(npmDir, "package.json"), "utf-8"),
   );
-  const expectedTargets = npmPkg.napi?.targets?.length ?? 0;
+  const expectedTargets = pkgJson.napi?.targets?.length ?? 0;
   const existingNodeFiles = readdirSync(npmDir).filter((f) => f.endsWith(".node"));
   if (existingNodeFiles.length < expectedTargets) {
     execSync("pnpm build", { cwd: npmDir, stdio: "inherit" });
