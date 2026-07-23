@@ -262,7 +262,9 @@ async function cmdPublish() {
   if (existingNodeFiles.length < expectedTargets) {
     execSync("pnpm build", { cwd: npmDir, stdio: "inherit" });
   } else {
-    console.log(`Found ${existingNodeFiles.length}/${expectedTargets} pre-built .node files, skipping build`);
+    console.log(
+      `Found ${existingNodeFiles.length}/${expectedTargets} pre-built .node files, skipping build`,
+    );
   }
 
   const tag = `v${npmVersion}`;
