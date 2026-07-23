@@ -1,15 +1,9 @@
 [workspace]
 resolver = "2"
-members = [
-  "crates/ikihs-core",
-  "crates/ikihs-themes",
-  "crates/ikihs-engine-syntect",
-  "apps/ikihs-cli",
-  "packages/ikihsjs",
-]
+members = [ "crates/ikihs-core", "crates/ikihs-themes", "crates/ikihs-engine-syntect", "apps/ikihs-cli", "packages/ikihsjs" ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 license = "MIT"
 
@@ -19,18 +13,13 @@ thiserror = "2"
 
 [workspace.dependencies.serde]
 version = "1"
-features = ["derive"]
+features = [ "derive" ]
 
 [workspace.metadata.dist]
 cargo-dist-version = "0.32.0"
-ci = ["github"]
-installers = ["shell", "powershell"]
-targets = [
-  "aarch64-apple-darwin",
-  "x86_64-apple-darwin",
-  "x86_64-unknown-linux-gnu",
-  "x86_64-pc-windows-msvc",
-]
+ci = [ "github" ]
+installers = [ "shell", "powershell" ]
+targets = [ "aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc" ]
 publish-jobs = []
 host-jobs = []
 pr-run-mode = "plan"
