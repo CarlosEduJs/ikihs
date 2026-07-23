@@ -48,9 +48,6 @@ jobs:
           - target: aarch64-unknown-linux-gnu
             runner: ubuntu-latest
             flags: --platform --target aarch64-unknown-linux-gnu
-          - target: x86_64-apple-darwin
-            runner: macos-13
-            flags: --platform
           - target: aarch64-apple-darwin
             runner: macos-latest
             flags: --platform
