@@ -253,7 +253,13 @@ async function cmdPublish() {
 
   console.log(`Publishing ikihsjs@${npmVersion}...`);
 
-  execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
+  const npmDir = join(ROOT, "packages/ikihsjs");
+  const existingNodeFiles = readdirSync(npmDir).filter((f) => f.endsWith(".node"));
+  if (existingNodeFiles.length === 0) {
+    execSync("pnpm build", { cwd: npmDir, stdio: "inherit" });
+  } else {
+    console.log(`Found ${existingNodeFiles.length} pre-built .node files, skipping build`);
+  }
 
   const tag = `v${npmVersion}`;
   try {
