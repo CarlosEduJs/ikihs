@@ -253,7 +253,19 @@ async function cmdPublish() {
 
   console.log(`Publishing ikihsjs@${npmVersion}...`);
 
-  execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
+  const npmDir = join(ROOT, "packages/ikihsjs");
+  const pkgJson: { napi?: { targets?: string[] } } = JSON.parse(
+    readFileSync(join(npmDir, "package.json"), "utf-8"),
+  );
+  const expectedTargets = pkgJson.napi?.targets?.length ?? 0;
+  const existingNodeFiles = readdirSync(npmDir).filter((f) => f.endsWith(".node"));
+  if (existingNodeFiles.length < expectedTargets) {
+    execSync("pnpm build", { cwd: npmDir, stdio: "inherit" });
+  } else {
+    console.log(
+      `Found ${existingNodeFiles.length}/${expectedTargets} pre-built .node files, skipping build`,
+    );
+  }
 
   const tag = `v${npmVersion}`;
   try {
