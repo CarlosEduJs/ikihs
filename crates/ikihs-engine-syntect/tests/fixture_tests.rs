@@ -537,7 +537,7 @@ fn fixture_markdown_code_blocks() {
         result.missing_ikihs,
         result.total
     );
-    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+    assert!(s >= 80, "fixture {path} score too low: {s}% (min 80%)");
 }
 
 #[test]
