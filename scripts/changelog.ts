@@ -145,13 +145,13 @@ function buildChangelogEntries(entries: ChangeEntry[], version: string): string 
   const groups: Record<string, string[]> = { Major: [], Minor: [], Patch: [] };
   for (const e of entries) {
     const group = e.bump === "major" ? "Major" : e.bump === "minor" ? "Minor" : "Patch";
-    const pkg = e.packages.length ? ` (${e.packages.join(", ")})` : "";
-    groups[group]!.push(`-${pkg} ${e.body}`);
+    const pkg = e.packages.length ? `#### ${e.packages.join(", ")} - v${version}\n\n` : "";
+    groups[group]!.push(`${pkg}- ${e.body}`);
   }
   for (const g of ["Major", "Minor", "Patch"] as const) {
     if (groups[g]!.length) {
-      lines.push(`### ${g} Changes\n`);
-      lines.push(...groups[g]!.map((l) => l + "\n"));
+      lines.push(`### ${g} Changes\n\n`);
+      lines.push(...groups[g]!.map((l) => l + "\n\n"));
     }
   }
   return lines.join("\n");
