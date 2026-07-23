@@ -30,16 +30,29 @@ function parseFrontmatter(content: string): { fm: Record<string, unknown>; body:
   const raw = match[1]!;
   const body = match[2]!;
   const fm: Record<string, unknown> = {};
-  for (const line of raw.split("\n")) {
+  const lines = raw.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]!;
     const idx = line.indexOf(":");
     if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
-    const val = line.slice(idx + 1).trim();
-    if (val.startsWith("[")) {
+    let val = line.slice(idx + 1).trim();
+    if (val === "") {
+      const items: string[] = [];
+      while (i + 1 < lines.length && lines[i + 1]!.trimStart().startsWith("- ")) {
+        i++;
+        items.push(
+          lines[i]!.trim()
+            .slice(2)
+            .replace(/^['"]|['"]$/g, ""),
+        );
+      }
+      fm[key] = items;
+    } else if (val.startsWith("[")) {
       fm[key] = val
         .slice(1, -1)
         .split(",")
-        .map((s) => s.trim().replace(/['"]/g, ""))
+        .map((s) => s.trim().replace(/^['"]|['"]$/g, ""))
         .filter(Boolean);
     } else {
       fm[key] = val.replace(/^['"]|['"]$/g, "");
