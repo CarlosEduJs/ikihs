@@ -239,15 +239,12 @@ async function cmdPublish() {
   const npmVersion = readNpmVersion(npmPkg);
   const { execSync } = await import("node:child_process");
 
-  // Check if this version is already published on npm
   let published = "";
   try {
     published = execSync("npm view ikihsjs version", { encoding: "utf-8" }).trim();
   } catch {
-    console.log("npm view ikihsjs version => FAILED (package not found on registry)");
+    // not found on registry yet
   }
-
-  if (published) console.log(`npm view ikihsjs version => ${published}`);
 
   if (published === npmVersion) {
     console.log(`ikihsjs@${npmVersion} already published on npm — nothing to do`);
@@ -255,16 +252,6 @@ async function cmdPublish() {
   }
 
   console.log(`Publishing ikihsjs@${npmVersion}...`);
-
-  const pkgJson = JSON.parse(readFileSync(npmPkg, "utf-8"));
-  console.log(`package name: ${pkgJson.name}`);
-  console.log(`NODE_AUTH_TOKEN set: ${!!process.env.NODE_AUTH_TOKEN}`);
-  try {
-    const whoami = execSync("npm whoami", { encoding: "utf-8" }).trim();
-    console.log(`npm whoami => ${whoami}`);
-  } catch {
-    console.log("npm whoami => not authenticated");
-  }
 
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 

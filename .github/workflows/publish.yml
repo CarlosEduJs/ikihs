@@ -32,8 +32,11 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Configure git with PAT for tag push
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/${{ github.repository }}.git
+
       - name: Publish if version changed
         run: pnpm changelog publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
