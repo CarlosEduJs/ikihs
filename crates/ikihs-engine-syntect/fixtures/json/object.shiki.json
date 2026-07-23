@@ -1,0 +1,96 @@
+{
+  "language": "json",
+  "tokens": [
+    [
+      {
+        "content": "{",
+        "offset": 0,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 2,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"name\"",
+        "offset": 4,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 10,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"ikihs\"",
+        "offset": 12,
+        "color": "#CE9178"
+      },
+      {
+        "content": ",",
+        "offset": 19,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 21,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"version\"",
+        "offset": 23,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 32,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"0.1.0\"",
+        "offset": 34,
+        "color": "#CE9178"
+      },
+      {
+        "content": ",",
+        "offset": 41,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 43,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"private\"",
+        "offset": 45,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 54,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "true",
+        "offset": 56,
+        "color": "#569CD6"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 61,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

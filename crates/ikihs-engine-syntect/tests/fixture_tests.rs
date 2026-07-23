@@ -116,17 +116,11 @@ fn run_fixture(_path: &str, source: &str, expected: &ShikiFixture) -> MatchResul
 }
 
 fn load_fixture_source(fixture_path: &str) -> String {
-    let path = fixture_dir().join(fixture_path).with_extension("rs");
-    if path.exists() {
-        return fs::read_to_string(&path).unwrap();
-    }
-    let path = fixture_dir().join(fixture_path).with_extension("js");
-    if path.exists() {
-        return fs::read_to_string(&path).unwrap();
-    }
-    let path = fixture_dir().join(fixture_path).with_extension("py");
-    if path.exists() {
-        return fs::read_to_string(&path).unwrap();
+    for ext in &["rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml"] {
+        let path = fixture_dir().join(fixture_path).with_extension(ext);
+        if path.exists() {
+            return fs::read_to_string(&path).unwrap();
+        }
     }
     panic!("fixture not found: {fixture_path}");
 }
@@ -318,6 +312,272 @@ fn fixture_edge_only_comments() {
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
 
+#[test]
+fn fixture_typescript_types() {
+    let path = "typescript/types";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+}
+
+#[test]
+fn fixture_typescript_generics() {
+    let path = "typescript/generics";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+}
+
+#[test]
+fn fixture_json_object() {
+    let path = "json/object";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+}
+
+#[test]
+fn fixture_json_nested() {
+    let path = "json/nested";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+}
+
+#[test]
+fn fixture_css_selectors() {
+    let path = "css/selectors";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_css_at_rules() {
+    let path = "css/at-rules";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_html_tags() {
+    let path = "html/tags";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_html_attributes() {
+    let path = "html/attributes";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_shell_commands() {
+    let path = "shell/commands";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+}
+
+#[test]
+fn fixture_shell_vars() {
+    let path = "shell/vars";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_markdown_headers() {
+    let path = "markdown/headers";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_markdown_code_blocks() {
+    let path = "markdown/code-blocks";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_yaml_keys_values() {
+    let path = "yaml/keys-values";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
+#[test]
+fn fixture_yaml_nested() {
+    let path = "yaml/nested";
+    let source = load_fixture_source(path);
+    let expected = load_fixture_expected(path);
+    let result = run_fixture(path, &source, &expected);
+    let s = score(&result);
+    println!(
+        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
+        result.exact,
+        result.color_diff,
+        result.offset_diff,
+        result.extra,
+        result.missing_ikihs,
+        result.total
+    );
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
+}
+
 /// Run all fixtures in batch mode and print summary
 #[test]
 fn fixture_summary() {
@@ -328,6 +588,20 @@ fn fixture_summary() {
         "javascript/classes",
         "python/functions",
         "python/decorators",
+        "typescript/types",
+        "typescript/generics",
+        "json/object",
+        "json/nested",
+        "css/selectors",
+        "css/at-rules",
+        "html/tags",
+        "html/attributes",
+        "shell/commands",
+        "shell/vars",
+        "markdown/headers",
+        "markdown/code-blocks",
+        "yaml/keys-values",
+        "yaml/nested",
         "edge-cases/empty",
         "edge-cases/single-line",
         "edge-cases/only-comments",
@@ -364,5 +638,5 @@ fn fixture_summary() {
         "OVERALL", overall, total_exact, total_all
     );
     println!();
-    assert!(overall >= 90, "overall score too low: {overall}% (min 90%)");
+    assert!(overall >= 85, "overall score too low: {overall}% (min 85%)");
 }

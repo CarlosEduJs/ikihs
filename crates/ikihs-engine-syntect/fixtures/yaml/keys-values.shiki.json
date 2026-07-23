@@ -1,0 +1,57 @@
+{
+  "language": "yaml",
+  "tokens": [
+    [
+      {
+        "content": "name",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 4,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "ikihs",
+        "offset": 6,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "version",
+        "offset": 12,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 19,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"0.1.0\"",
+        "offset": 21,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "license",
+        "offset": 29,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 36,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "MIT",
+        "offset": 38,
+        "color": "#CE9178"
+      }
+    ],
+    []
+  ]
+}

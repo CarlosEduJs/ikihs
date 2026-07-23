@@ -1,0 +1,205 @@
+{
+  "language": "javascript",
+  "tokens": [
+    [
+      {
+        "content": "interface",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 9,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "User",
+        "offset": 10,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " {",
+        "offset": 14,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 17,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name",
+        "offset": 19,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 23,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "string",
+        "offset": 25,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": ";",
+        "offset": 31,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 33,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "age",
+        "offset": 35,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 38,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "number",
+        "offset": 40,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": ";",
+        "offset": 46,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 48,
+        "color": "#D4D4D4"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "type",
+        "offset": 51,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 55,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "Status",
+        "offset": 56,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " = ",
+        "offset": 62,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"active\"",
+        "offset": 65,
+        "color": "#CE9178"
+      },
+      {
+        "content": " | ",
+        "offset": 73,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"inactive\"",
+        "offset": 76,
+        "color": "#CE9178"
+      },
+      {
+        "content": ";",
+        "offset": 86,
+        "color": "#D4D4D4"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "const",
+        "offset": 89,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 94,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "user",
+        "offset": 95,
+        "color": "#4FC1FF"
+      },
+      {
+        "content": ": ",
+        "offset": 99,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "User",
+        "offset": 101,
+        "color": "#4EC9B0"
+      },
+      {
+        "content": " = { ",
+        "offset": 105,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "name:",
+        "offset": 110,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " ",
+        "offset": 115,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"Alice\"",
+        "offset": 116,
+        "color": "#CE9178"
+      },
+      {
+        "content": ", ",
+        "offset": 123,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "age:",
+        "offset": 125,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " ",
+        "offset": 129,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "30",
+        "offset": 130,
+        "color": "#B5CEA8"
+      },
+      {
+        "content": " };",
+        "offset": 132,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

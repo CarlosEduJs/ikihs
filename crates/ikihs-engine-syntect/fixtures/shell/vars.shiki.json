@@ -1,0 +1,183 @@
+{
+  "language": "bash",
+  "tokens": [
+    [
+      {
+        "content": "NAME",
+        "offset": 0,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 4,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"world\"",
+        "offset": 5,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "echo",
+        "offset": 13,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 17,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"hello ",
+        "offset": 18,
+        "color": "#CE9178"
+      },
+      {
+        "content": "$NAME",
+        "offset": 25,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "\"",
+        "offset": 30,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "export",
+        "offset": 32,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 38,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "PATH",
+        "offset": 39,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 43,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"/usr/bin:",
+        "offset": 44,
+        "color": "#CE9178"
+      },
+      {
+        "content": "$PATH",
+        "offset": 54,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "\"",
+        "offset": 59,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "for",
+        "offset": 61,
+        "color": "#C586C0"
+      },
+      {
+        "content": " ",
+        "offset": 64,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "i",
+        "offset": 65,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " ",
+        "offset": 66,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "in",
+        "offset": 67,
+        "color": "#C586C0"
+      },
+      {
+        "content": " ",
+        "offset": 69,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "1",
+        "offset": 70,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 71,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "2",
+        "offset": 72,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 73,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "3",
+        "offset": 74,
+        "color": "#CE9178"
+      },
+      {
+        "content": "; ",
+        "offset": 75,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "do",
+        "offset": 77,
+        "color": "#C586C0"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 80,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "echo",
+        "offset": 82,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 86,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "$i",
+        "offset": 87,
+        "color": "#9CDCFE"
+      }
+    ],
+    [
+      {
+        "content": "done",
+        "offset": 90,
+        "color": "#C586C0"
+      }
+    ],
+    []
+  ]
+}

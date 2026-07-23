@@ -1,0 +1,261 @@
+{
+  "language": "html",
+  "tokens": [
+    [
+      {
+        "content": "<!",
+        "offset": 0,
+        "color": "#808080"
+      },
+      {
+        "content": "DOCTYPE",
+        "offset": 2,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 9,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "html",
+        "offset": 10,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ">",
+        "offset": 14,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "<",
+        "offset": 16,
+        "color": "#808080"
+      },
+      {
+        "content": "html",
+        "offset": 17,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 21,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "<",
+        "offset": 23,
+        "color": "#808080"
+      },
+      {
+        "content": "head",
+        "offset": 24,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 28,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 30,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "<",
+        "offset": 32,
+        "color": "#808080"
+      },
+      {
+        "content": "title",
+        "offset": 33,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 38,
+        "color": "#808080"
+      },
+      {
+        "content": "Hello",
+        "offset": 39,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "</",
+        "offset": 44,
+        "color": "#808080"
+      },
+      {
+        "content": "title",
+        "offset": 46,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 51,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "</",
+        "offset": 53,
+        "color": "#808080"
+      },
+      {
+        "content": "head",
+        "offset": 55,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 59,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "<",
+        "offset": 61,
+        "color": "#808080"
+      },
+      {
+        "content": "body",
+        "offset": 62,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 66,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 68,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "<",
+        "offset": 70,
+        "color": "#808080"
+      },
+      {
+        "content": "h1",
+        "offset": 71,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 73,
+        "color": "#808080"
+      },
+      {
+        "content": "Title",
+        "offset": 74,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "</",
+        "offset": 79,
+        "color": "#808080"
+      },
+      {
+        "content": "h1",
+        "offset": 81,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 83,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 85,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "<",
+        "offset": 87,
+        "color": "#808080"
+      },
+      {
+        "content": "p",
+        "offset": 88,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 89,
+        "color": "#808080"
+      },
+      {
+        "content": "Paragraph",
+        "offset": 90,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "</",
+        "offset": 99,
+        "color": "#808080"
+      },
+      {
+        "content": "p",
+        "offset": 101,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 102,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "</",
+        "offset": 104,
+        "color": "#808080"
+      },
+      {
+        "content": "body",
+        "offset": 106,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 110,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "</",
+        "offset": 112,
+        "color": "#808080"
+      },
+      {
+        "content": "html",
+        "offset": 114,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 118,
+        "color": "#808080"
+      }
+    ],
+    []
+  ]
+}

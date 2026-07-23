@@ -1,0 +1,55 @@
+{
+  "language": "markdown",
+  "tokens": [
+    [
+      {
+        "content": "# Title",
+        "offset": 0,
+        "color": "#569CD6"
+      }
+    ],
+    [
+      {
+        "content": "## Section",
+        "offset": 8,
+        "color": "#569CD6"
+      }
+    ],
+    [
+      {
+        "content": "### Subsection",
+        "offset": 19,
+        "color": "#569CD6"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "Some text here with ",
+        "offset": 35,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "**bold**",
+        "offset": 55,
+        "color": "#569CD6"
+      },
+      {
+        "content": " and ",
+        "offset": 63,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "*italic*",
+        "offset": 68,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": ".",
+        "offset": 76,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}
