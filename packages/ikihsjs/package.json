@@ -11,15 +11,15 @@
     "syntax-highlighting",
     "textmate"
   ],
-  "homepage": "https://github.com/carlosedujs/ikihs",
+  "homepage": "https://github.com/CarlosEduJs/ikihs",
   "bugs": {
-    "url": "https://github.com/carlosedujs/ikihs/issues"
+    "url": "https://github.com/CarlosEduJs/ikihs/issues"
   },
   "license": "MIT",
   "author": "Ikihs contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carlosedujs/ikihs.git",
+    "url": "https://github.com/CarlosEduJs/ikihs",
     "directory": "packages/ikihsjs"
   },
   "files": [

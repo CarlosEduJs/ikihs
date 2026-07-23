@@ -4,7 +4,7 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 
-repository = "https://github.com/carlosedujs/ikihs"
+repository = "https://github.com/CarlosEduJs/ikihs"
 
 [dependencies]
 ikihs-core = { path = "../../crates/ikihs-core" }

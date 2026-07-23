@@ -6,7 +6,7 @@
 
 **Syntax highlight at native speed. No interpreter overhead. Use the same API as Shiki.**
 
-[![Compat: 96%](https://img.shields.io/badge/compat-96%25-2ea44f)](https://github.com/carlosedujs/ikihs/tree/main/crates/ikihs-engine-syntect/fixtures)
+[![Compat: 96%](https://img.shields.io/badge/compat-96%25-2ea44f)](https://github.com/CarlosEduJs/ikihs/tree/main/crates/ikihs-engine-syntect/fixtures)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Rust](https://img.shields.io/badge/Rust-1.85+-de5843)
 
