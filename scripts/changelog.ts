@@ -296,7 +296,9 @@ async function cmdUpdateRelease() {
 
   const afterHeading = start + heading.length;
   const end = changelog.indexOf("\n## ", afterHeading);
-  const section = (end === -1 ? changelog.slice(afterHeading) : changelog.slice(afterHeading, end)).trim();
+  const section = (
+    end === -1 ? changelog.slice(afterHeading) : changelog.slice(afterHeading, end)
+  ).trim();
 
   const notesPath = join(ROOT, ".release-notes.md");
   writeFileSync(notesPath, section + "\n");
