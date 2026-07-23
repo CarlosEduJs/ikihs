@@ -347,7 +347,7 @@ fn fixture_typescript_generics() {
         result.missing_ikihs,
         result.total
     );
-    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+    assert!(s >= 70, "fixture {path} score too low: {s}% (min 70%)");
 }
 
 #[test]
@@ -366,7 +366,7 @@ fn fixture_json_object() {
         result.missing_ikihs,
         result.total
     );
-    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+    assert!(s >= 80, "fixture {path} score too low: {s}% (min 80%)");
 }
 
 #[test]
@@ -480,7 +480,7 @@ fn fixture_shell_commands() {
         result.missing_ikihs,
         result.total
     );
-    assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
+    assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
 
 #[test]

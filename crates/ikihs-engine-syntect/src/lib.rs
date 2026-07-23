@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::str::FromStr;
 
 use ikihs_core::Error;
@@ -22,16 +23,25 @@ pub struct SyntectEngine {
 impl SyntectEngine {
     pub fn new() -> Self {
         Self {
-            syntax_set: SyntaxSet::load_defaults_newlines(),
+            syntax_set: Self::build_syntax_set(),
             mapper: Box::new(BuiltinScopeMapper::new()),
         }
     }
 
     pub fn with_mapper(mapper: impl ScopeMapper + 'static) -> Self {
         Self {
-            syntax_set: SyntaxSet::load_defaults_newlines(),
+            syntax_set: Self::build_syntax_set(),
             mapper: Box::new(mapper),
         }
+    }
+
+    fn build_syntax_set() -> SyntaxSet {
+        let mut builder = SyntaxSet::load_defaults_newlines().into_builder();
+        let grammar_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("grammars");
+        if grammar_dir.exists() {
+            let _ = builder.add_from_folder(&grammar_dir, true);
+        }
+        builder.build()
     }
 }
 
@@ -184,6 +194,14 @@ fn compatibility_rules() -> Vec<ThemeItem> {
         // console etc → variable color (Syntect scopes as support.type.object.*,
         // but Shiki treats as variable → #9CDCFE)
         (vec!["support.type.object"], "#9CDCFE"),
+        // JSON: syntect grammar scopes keys as string.quoted.double under
+        // meta.structure.dictionary.key, but Shiki scopes them as support.type.property-name.
+        // Need two-element selector to beat the theme's `string` selector (deeper match).
+        (vec!["meta.structure.dictionary.key string"], "#9CDCFE"),
+        // Shell: syntect scopes function calls as variable.function (→ variable blue)
+        // but Shiki scopes them as support.function (→ function yellow #DCDCAA)
+        (vec!["variable.function"], "#DCDCAA"),
+
     ];
 
     for (scopes, fg) in &pairs {
@@ -503,7 +521,7 @@ mod tests {
         assert_eq!(syntect_theme.name, Some("empty".into()));
         assert!(syntect_theme.settings.foreground.is_none());
         assert!(syntect_theme.settings.background.is_none());
-        assert_eq!(syntect_theme.scopes.len(), 6);
+        assert_eq!(syntect_theme.scopes.len(), 8);
     }
 
     #[test]
@@ -545,8 +563,8 @@ mod tests {
                 a: 255
             })
         );
-        assert_eq!(syntect_theme.scopes.len(), 7);
-        assert_eq!(syntect_theme.scopes[6].scope.selectors.len(), 2);
+        assert_eq!(syntect_theme.scopes.len(), 9);
+        assert_eq!(syntect_theme.scopes[8].scope.selectors.len(), 2);
     }
 
     #[test]

@@ -93,15 +93,18 @@ fn build_shiki_color_map<'a>(source: &'a str, shiki_fixture: &'a ShikiFixture) -
 }
 
 fn diagnose_fixture(path: &str) {
-    let source_path = fixture_dir().join(path).with_extension(
-        if fs::metadata(fixture_dir().join(path).with_extension("rs")).is_ok() {
-            "rs"
-        } else if fs::metadata(fixture_dir().join(path).with_extension("js")).is_ok() {
-            "js"
-        } else {
-            "py"
-        },
-    );
+    let source_path = fixture_dir().join(path);
+    let source_path = {
+        let mut found = None;
+        for ext in &["rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml"] {
+            let p = source_path.with_extension(ext);
+            if p.exists() {
+                found = Some(p);
+                break;
+            }
+        }
+        found.unwrap_or_else(|| panic!("source not found for {path}"))
+    };
     let source = fs::read_to_string(&source_path).unwrap();
 
     let mut expected_path = fixture_dir().join(path);
