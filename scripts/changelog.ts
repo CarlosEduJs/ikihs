@@ -254,22 +254,21 @@ async function cmdPublish() {
 
   console.log(`Publishing ikihsjs@${npmVersion}...`);
 
-  // Diagnostics requested by npm support
-  execSync("node --version", { stdio: "inherit" });
-  execSync("npm --version", { stdio: "inherit" });
-  try { execSync("npm i -g npm@11", { stdio: "inherit" }); } catch {}
-  execSync("npm --version", { stdio: "inherit" });
-  execSync("npm config get registry", { stdio: "inherit" });
-  execSync("npm config list -l", { stdio: "inherit" });
-  execSync("npm ping --registry=https://registry.npmjs.org", { stdio: "inherit" });
-
   execSync("pnpm build", { cwd: join(ROOT, "packages/ikihsjs"), stdio: "inherit" });
 
   const tag = `v${npmVersion}`;
-  execSync("npm publish --workspace packages/ikihsjs --access public --provenance --loglevel verbose", {
-    cwd: ROOT,
-    stdio: "inherit",
-  });
+  try {
+    execSync("npm publish --workspace packages/ikihsjs --access public --provenance", {
+      cwd: ROOT,
+      stdio: "inherit",
+    });
+  } catch {
+    console.log("Provenance publish failed, falling back to NODE_AUTH_TOKEN...");
+    execSync("npm publish --workspace packages/ikihsjs --access public", {
+      cwd: ROOT,
+      stdio: "inherit",
+    });
+  }
 
   execSync(`git tag "${tag}"`, { stdio: "inherit" });
   execSync(`git push origin "${tag}"`, { stdio: "inherit" });
