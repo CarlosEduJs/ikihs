@@ -3,6 +3,9 @@ name = "ikihsjs"
 version = "0.0.0"
 edition = "2021"
 
+[package.metadata.dist]
+dist = false
+
 [lib]
 crate-type = ["cdylib"]
 

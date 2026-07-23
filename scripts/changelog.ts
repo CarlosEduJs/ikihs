@@ -274,6 +274,38 @@ async function cmdPublish() {
   console.log(`\nPublished ikihsjs@${npmVersion} and pushed tag ${tag}`);
 }
 
+async function cmdUpdateRelease() {
+  const { execSync } = await import("node:child_process");
+  const version = readCargoVersion();
+  const tag = `v${version}`;
+
+  if (!existsSync(CHANGELOG)) {
+    console.error("CHANGELOG.md not found");
+    process.exit(1);
+  }
+
+  const changelog = readFileSync(CHANGELOG, "utf-8");
+
+  // Extract the section for this version
+  const heading = `## ${version}`;
+  const start = changelog.indexOf(heading);
+  if (start === -1) {
+    console.error(`No changelog entry found for ${version}`);
+    process.exit(1);
+  }
+
+  const afterHeading = start + heading.length;
+  const end = changelog.indexOf("\n## ", afterHeading);
+  const section = (end === -1 ? changelog.slice(afterHeading) : changelog.slice(afterHeading, end)).trim();
+
+  const notesPath = join(ROOT, ".release-notes.md");
+  writeFileSync(notesPath, section + "\n");
+
+  execSync(`gh release edit "${tag}" --notes-file "${notesPath}"`, { stdio: "inherit" });
+  unlinkSync(notesPath);
+  console.log(`Release ${tag} body updated from CHANGELOG.md`);
+}
+
 // ─── Main ───
 
 const cmd = process.argv[2] || "add";
@@ -288,8 +320,11 @@ switch (cmd) {
   case "publish":
     await cmdPublish();
     break;
+  case "update-release":
+    await cmdUpdateRelease();
+    break;
   default:
     console.error(`Unknown command: ${cmd}`);
-    console.log("Usage: tsx scripts/changelog.ts <add|version|publish>");
+    console.log("Usage: tsx scripts/changelog.ts <add|version|publish|update-release>");
     process.exit(1);
 }
