@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- (ikihsjs) ### Minor Changes
+#### ikihsjs - v0.2.0
 
 - Multi-platform npm package: matrix build for Linux x64/ARM64, macOS Intel/ARM, Windows x64
 
