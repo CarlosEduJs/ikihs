@@ -1,0 +1,84 @@
+{
+  "language": "bash",
+  "tokens": [
+    [
+      {
+        "content": "echo",
+        "offset": 0,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 4,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"hello world\"",
+        "offset": 5,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "ls",
+        "offset": 19,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 21,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "-la",
+        "offset": 22,
+        "color": "#569CD6"
+      }
+    ],
+    [
+      {
+        "content": "grep",
+        "offset": 26,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 30,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"pattern\"",
+        "offset": 31,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 40,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "file.txt",
+        "offset": 41,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "npm",
+        "offset": 50,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": " ",
+        "offset": 53,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "install",
+        "offset": 54,
+        "color": "#CE9178"
+      }
+    ],
+    []
+  ]
+}

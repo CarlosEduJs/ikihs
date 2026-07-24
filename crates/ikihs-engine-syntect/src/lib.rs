@@ -12,7 +12,7 @@ use syntect::highlighting::{
     Color as SyntectColor, FontStyle as SyntectFontStyle, Highlighter,
     StyleModifier as SyntectStyleModifier, Theme as SyntectTheme, ThemeItem, ThemeSettings,
 };
-use syntect::parsing::{ScopeStack, SyntaxSet};
+use syntect::parsing::{ScopeStack, SyntaxReference, SyntaxSet};
 
 pub struct SyntectEngine {
     syntax_set: SyntaxSet,
@@ -22,16 +22,20 @@ pub struct SyntectEngine {
 impl SyntectEngine {
     pub fn new() -> Self {
         Self {
-            syntax_set: SyntaxSet::load_defaults_newlines(),
+            syntax_set: Self::build_syntax_set(),
             mapper: Box::new(BuiltinScopeMapper::new()),
         }
     }
 
     pub fn with_mapper(mapper: impl ScopeMapper + 'static) -> Self {
         Self {
-            syntax_set: SyntaxSet::load_defaults_newlines(),
+            syntax_set: Self::build_syntax_set(),
             mapper: Box::new(mapper),
         }
+    }
+
+    fn build_syntax_set() -> SyntaxSet {
+        SyntaxSet::load_defaults_newlines()
     }
 }
 
@@ -43,6 +47,10 @@ impl Default for SyntectEngine {
 
 impl HighlightEngine for SyntectEngine {
     fn highlight(&self, source: &str, lang: &str, theme: &Theme) -> Result<HighlightResult, Error> {
+        if lang == "markdown" || lang == "Markdown" || lang == "md" {
+            return self.highlight_markdown(source, theme);
+        }
+
         let syntax = self
             .syntax_set
             .find_syntax_by_token(lang)
@@ -51,53 +59,13 @@ impl HighlightEngine for SyntectEngine {
         let syntect_theme = convert_theme(theme)?;
         let highlighter = Highlighter::new(&syntect_theme);
 
-        let mut parse_state = syntect::parsing::ParseState::new(syntax);
-        let mut scope_stack = ScopeStack::new();
-
-        let mut lines = Vec::new();
-
-        for line in source.lines() {
-            let ops = parse_state
-                .parse_line(line, &self.syntax_set)
-                .map_err(|e| Error::Engine(format!("parse error: {}", e)))?;
-
-            let mut tokens = Vec::new();
-            let mut last_offset = 0;
-
-            for (offset, op) in &ops {
-                if *offset > last_offset {
-                    build_token(
-                        &mut tokens,
-                        line,
-                        last_offset,
-                        *offset,
-                        &scope_stack,
-                        &highlighter,
-                        &*self.mapper,
-                    );
-                }
-
-                scope_stack
-                    .apply(op)
-                    .map_err(|e| Error::Engine(format!("scope error: {}", e)))?;
-
-                last_offset = *offset;
-            }
-
-            if last_offset < line.len() {
-                build_token(
-                    &mut tokens,
-                    line,
-                    last_offset,
-                    line.len(),
-                    &scope_stack,
-                    &highlighter,
-                    &*self.mapper,
-                );
-            }
-
-            lines.push(HighlightLine { tokens });
-        }
+        let lines = highlight_source(
+            source,
+            syntax,
+            &highlighter,
+            &self.syntax_set,
+            &*self.mapper,
+        )?;
 
         Ok(HighlightResult {
             lines,
@@ -116,6 +84,170 @@ impl HighlightEngine for SyntectEngine {
     fn has_grammar(&self, lang: &str) -> bool {
         self.syntax_set.find_syntax_by_token(lang).is_some()
     }
+}
+
+impl SyntectEngine {
+    fn highlight_markdown(&self, source: &str, theme: &Theme) -> Result<HighlightResult, Error> {
+        let syntect_theme = convert_theme(theme)?;
+        let highlighter = Highlighter::new(&syntect_theme);
+
+        let fences = parse_code_fences(source);
+
+        let md_syntax = self
+            .syntax_set
+            .find_syntax_by_token("markdown")
+            .ok_or_else(|| Error::GrammarNotFound("markdown".into()))?;
+
+        let mut all_lines = highlight_source(
+            source,
+            md_syntax,
+            &highlighter,
+            &self.syntax_set,
+            &*self.mapper,
+        )?;
+
+        for fence in &fences {
+            if let Some(code_syntax) = self.syntax_set.find_syntax_by_token(&fence.language) {
+                let code_source = extract_lines(source, fence.start_line, fence.end_line);
+                let code_lines = highlight_source(
+                    &code_source,
+                    code_syntax,
+                    &highlighter,
+                    &self.syntax_set,
+                    &*self.mapper,
+                )?;
+                for (i, line) in code_lines.into_iter().enumerate() {
+                    let idx = fence.start_line + i;
+                    if idx < all_lines.len() {
+                        all_lines[idx] = line;
+                    }
+                }
+            }
+        }
+
+        Ok(HighlightResult {
+            lines: all_lines,
+            language: "Markdown".into(),
+        })
+    }
+}
+
+fn highlight_source(
+    source: &str,
+    syntax: &SyntaxReference,
+    highlighter: &Highlighter,
+    syntax_set: &SyntaxSet,
+    mapper: &dyn ScopeMapper,
+) -> Result<Vec<HighlightLine>, Error> {
+    let mut parse_state = syntect::parsing::ParseState::new(syntax);
+    let mut scope_stack = ScopeStack::new();
+    let mut lines = Vec::new();
+
+    for line in source.lines() {
+        let ops = parse_state
+            .parse_line(line, syntax_set)
+            .map_err(|e| Error::Engine(format!("parse error: {}", e)))?;
+
+        let mut tokens = Vec::new();
+        let mut last_offset = 0;
+
+        for (offset, op) in &ops {
+            if *offset > last_offset {
+                build_token(
+                    &mut tokens,
+                    line,
+                    last_offset,
+                    *offset,
+                    &scope_stack,
+                    highlighter,
+                    mapper,
+                );
+            }
+
+            scope_stack
+                .apply(op)
+                .map_err(|e| Error::Engine(format!("scope error: {}", e)))?;
+
+            last_offset = *offset;
+        }
+
+        if last_offset < line.len() {
+            build_token(
+                &mut tokens,
+                line,
+                last_offset,
+                line.len(),
+                &scope_stack,
+                highlighter,
+                mapper,
+            );
+        }
+
+        lines.push(HighlightLine { tokens });
+    }
+
+    Ok(lines)
+}
+
+struct CodeFence {
+    start_line: usize,
+    end_line: usize,
+    language: String,
+}
+
+fn parse_code_fences(source: &str) -> Vec<CodeFence> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut fences = Vec::new();
+    let mut i = 0;
+
+    while i < lines.len() {
+        let trimmed = lines[i].trim();
+        if let Some(lang) = trimmed.strip_prefix("```") {
+            let lang = lang.trim().to_string();
+            let mut j = i + 1;
+            while j < lines.len() {
+                if lines[j].trim() == "```" {
+                    if j > i + 1 {
+                        fences.push(CodeFence {
+                            start_line: i + 1,
+                            end_line: j,
+                            language: if lang.is_empty() {
+                                "bash".into()
+                            } else {
+                                lang.clone()
+                            },
+                        });
+                    }
+                    i = j + 1;
+                    break;
+                }
+                j += 1;
+            }
+            if j >= lines.len() {
+                if j > i + 1 {
+                    fences.push(CodeFence {
+                        start_line: i + 1,
+                        end_line: j,
+                        language: if lang.is_empty() { "bash".into() } else { lang },
+                    });
+                }
+                break;
+            }
+        } else {
+            i += 1;
+        }
+    }
+
+    fences
+}
+
+fn extract_lines(source: &str, start_line: usize, end_line: usize) -> String {
+    source
+        .lines()
+        .skip(start_line)
+        .take(end_line.saturating_sub(start_line))
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 fn build_token(
@@ -184,6 +316,16 @@ fn compatibility_rules() -> Vec<ThemeItem> {
         // console etc → variable color (Syntect scopes as support.type.object.*,
         // but Shiki treats as variable → #9CDCFE)
         (vec!["support.type.object"], "#9CDCFE"),
+        // JSON: syntect grammar scopes keys as string.quoted.double under
+        // meta.structure.dictionary.key, but Shiki scopes them as support.type.property-name.
+        // Need two-element selector to beat the theme's `string` selector (deeper match).
+        (vec!["meta.structure.dictionary.key string"], "#9CDCFE"),
+        // Shell: syntect scopes function calls as variable.function (→ variable blue)
+        // but Shiki scopes them as support.function (→ function yellow #DCDCAA)
+        (vec!["variable.function"], "#DCDCAA"),
+        // Shell flags: syntect scopes `-la` as variable.parameter.option (→ variable blue)
+        // but Shiki colors them as keyword (#569CD6)
+        (vec!["variable.parameter.option"], "#569CD6"),
     ];
 
     for (scopes, fg) in &pairs {
@@ -503,7 +645,7 @@ mod tests {
         assert_eq!(syntect_theme.name, Some("empty".into()));
         assert!(syntect_theme.settings.foreground.is_none());
         assert!(syntect_theme.settings.background.is_none());
-        assert_eq!(syntect_theme.scopes.len(), 6);
+        assert_eq!(syntect_theme.scopes.len(), 9);
     }
 
     #[test]
@@ -545,8 +687,8 @@ mod tests {
                 a: 255
             })
         );
-        assert_eq!(syntect_theme.scopes.len(), 7);
-        assert_eq!(syntect_theme.scopes[6].scope.selectors.len(), 2);
+        assert_eq!(syntect_theme.scopes.len(), 10);
+        assert_eq!(syntect_theme.scopes[9].scope.selectors.len(), 2);
     }
 
     #[test]

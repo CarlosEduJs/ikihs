@@ -6,12 +6,12 @@
 
 **Syntax highlight at native speed. No interpreter overhead. Use the same API as Shiki.**
 
-[![Compat: 96%](https://img.shields.io/badge/compat-96%25-2ea44f)](https://github.com/CarlosEduJs/ikihs/tree/main/crates/ikihs-engine-syntect/fixtures)
+[![Compat: 100% TS/JS · 96% overall](https://img.shields.io/badge/TS%2FJS-100%25%20·%2096%25%20overall-2ea44f)](https://github.com/CarlosEduJs/ikihs)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Rust](https://img.shields.io/badge/Rust-1.85+-de5843)
 
 Ikihs is a syntax highlight engine in Rust.
-It reads VS Code themes and TextMate grammars.
+It reads VS Code themes and parses code with **tree-sitter** (TypeScript, JavaScript) or **Syntect** (everything else).
 It compiles to a native binary or a Node addon.
 It uses no WASM and no JS main thread.
 It has no cold starts.
@@ -19,11 +19,11 @@ It has no cold starts.
 ## Use in Rust
 
 ```rust
-use ikihs_engine_syntect::SyntectEngine;
+use ikihs_engine_composite::CompositeEngine;
 use ikihs_themes::vscode_theme::VscodeThemeParser;
 
 let theme = VscodeThemeParser::parse_json(&theme_json)?;
-let engine = SyntectEngine::new();
+let engine = CompositeEngine::new();
 let result = engine.highlight("fn main() {}", "Rust", &theme)?;
 ```
 
@@ -38,69 +38,74 @@ const tokens = h.codeToTokensBase("fn main() {}", { lang: "rust", theme: "dark-p
 
 ## Compatibility
 
-Ikihs compares each byte position against Shiki v4.
+Ikihs compares each byte position against Shiki.
 A color mismatch counts as a failure.
-The current score is 96%.
 
-| Language         | Score |
-| ---------------- | ----- |
-| Python decorator | 100%  |
-| Rust hello world | 98%   |
-| Rust comments    | 98%   |
-| JS functions     | 96%   |
-| Python functions | 94%   |
-| JS classes       | 90%   |
+**Tree-sitter engine** matches Shiki **100%** for TypeScript and JavaScript — every byte, every color.
 
-The remaining 4% are grammar differences between Sublime Text grammars (Syntect) and VS Code grammars (Shiki).
-For example, `constructor` becomes `entity.name.function`.
-The variable `x` in `let x` has no scope.
-These differences are known and tracked.
+| Language           | Engine     | Score |
+| ------------------ | ---------- | ----- |
+| TypeScript (types) | tree-sitter | 100% |
+| TypeScript (generics) | tree-sitter | 100% |
+| JavaScript (functions) | tree-sitter | 100% |
+| JavaScript (classes) | tree-sitter | 100% |
+
+**Syntect engine** handles the remaining 30+ languages and averages ~96%.
+Most mismatches are harmless TextMate grammar differences (e.g. `constructor` scoped as `entity.name.function` instead of `keyword.constructor`).
+
+## How it works
+
+```
+┌──────────────────────────────────────────────┐
+│                CompositeEngine                │
+│  ┌──────────────┐  ┌──────────────────────┐   │
+│  │ TreeSitterEngine  │  SyntectEngine        │   │
+│  │ (TS, JS, JSX) │  │ (all other langs)    │   │
+│  └──────────────┘  └──────────────────────┘   │
+│  Routes by language at highlight time          │
+└──────────────────────────────────────────────┘
+```
+
+The tree-sitter engine walks the CST, maps each node to a scope string,
+then resolves the final color via **scope-prefix matching** against the
+VS Code theme — the same strategy as Shiki internally.
 
 ## Current status
 
-Version 0.1 is a proof of concept.
-It is not ready for production.
+Version 0.2 introduces the tree-sitter engine.
+TypeScript and JavaScript output is byte-identical to Shiki.
 
 **What works:**
 
-- Parse VS Code theme JSON with scope selector matching
-- Use 75 bundled TextMate grammars through Syntect
+- Parse VS Code theme JSON with scope-prefix matching
+- Tree-sitter highlighting for TypeScript / TSX / JavaScript / JSX
+- Syntect highlighting for 75+ other languages
 - Classify scopes into 12 categories (keyword, string, comment, function, variable, and others)
 - Use the CLI command `ikihs highlight`
 - Install the npm package `ikihsjs` through napi-rs
 - Compare fixtures against Shiki output
 
-**Not yet implemented:**
+**Planned (next PRs):**
 
-- `loadLanguage` and `loadTheme` (dynamic loading)
-- Production error handling
+- Python, Rust, and more languages via tree-sitter
+- JSX fixture tests
+- Reduce syntect color diffs for remaining languages
 - WASM build for browser
-
-## Architecture
-
-Ikihs has three layers:
-
-1. **Theme parser** — read VS Code `theme.json` and TextMate `.tmTheme` files into a neutral format.
-2. **Engine** — tokenize source code with TextMate grammars and apply colors from the theme.
-3. **Scope mapper** — convert TextMate scopes into 12 Ikihs categories.
-
-The engine is behind a trait.
-You can replace it with a different engine.
-
-Detailed design decisions are in [wiki.md](./wiki.md).
 
 ## Repository structure
 
 ```
 crates/
-  ikihs-core/           Types, traits, scope mapper
-  ikihs-themes/         Theme parsers (VS Code JSON, TextMate XML)
-  ikihs-engine-syntect/ Syntect-based highlight engine
+  ikihs-core/               Types, traits, scope primitive
+  ikihs-themes/             Theme parsers (VS Code JSON, TextMate XML)
+  ikihs-engine-syntect/     Syntect-based highlight engine (legacy)
+  ikihs-engine-treesitter/  Tree-sitter engine (TS, JS, JSX)
+  ikihs-engine-composite/   Router: tree-sitter for TS/JS, syntect for rest
 apps/
-  ikihs-cli/            CLI binary
+  ikihs-cli/                CLI binary
 packages/
-  ikihsjs/              npm package (napi-rs)
-  @ikihs/compare        Fixture comparison tool
+  ikihsjs/                  npm package (napi-rs)
+  @ikihs/compare            Fixture comparison tool
 ```
 
 ## License

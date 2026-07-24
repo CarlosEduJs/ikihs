@@ -11,9 +11,10 @@ thiserror.workspace = true
 [dependencies.syntect]
 version = "5"
 default-features = false
-features = ["default-onig", "plist-load", "default-syntaxes"]
+features = ["default-onig", "plist-load", "default-syntaxes", "yaml-load"]
 
 [dev-dependencies]
 ikihs-themes = { path = "../ikihs-themes" }
+ikihs-engine-treesitter = { path = "../ikihs-engine-treesitter" }
 serde.workspace = true
 serde_json.workspace = true

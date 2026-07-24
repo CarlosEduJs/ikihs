@@ -1,8 +1,10 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
-import { resolve, relative, extname, join } from "node:path";
+import { resolve, relative, extname, join, basename } from "node:path";
 import { highlightShiki, getHighlighter } from "./shiki.js";
 
 const FIXTURE_DIR = resolve(import.meta.dirname, "../../../crates/ikihs-engine-syntect/fixtures");
+
+const SKIP_FILES = new Set(["dark-plus.json"]);
 
 const LANG_MAP: Record<string, string> = {
   rs: "rust",
@@ -14,7 +16,7 @@ const LANG_MAP: Record<string, string> = {
   json: "json",
   md: "markdown",
   yaml: "yaml",
-  sh: "shell",
+  sh: "bash",
 };
 
 function findSources(dir: string): string[] {
@@ -25,7 +27,12 @@ function findSources(dir: string): string[] {
       results.push(...findSources(full));
     } else {
       const ext = extname(full).slice(1);
-      if (LANG_MAP[ext] && !full.endsWith(".shiki.json") && !full.endsWith(".expected.json")) {
+      if (
+        LANG_MAP[ext] &&
+        !full.endsWith(".shiki.json") &&
+        !full.endsWith(".expected.json") &&
+        !SKIP_FILES.has(basename(full))
+      ) {
         results.push(full);
       }
     }

@@ -1,0 +1,118 @@
+{
+  "language": "yaml",
+  "tokens": [
+    [
+      {
+        "content": "server",
+        "offset": 0,
+        "color": "#569CD6"
+      },
+      {
+        "content": ":",
+        "offset": 6,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 8,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "host",
+        "offset": 10,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 14,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "localhost",
+        "offset": 16,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 26,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "port",
+        "offset": 28,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 32,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "8080",
+        "offset": 34,
+        "color": "#B5CEA8"
+      }
+    ],
+    [
+      {
+        "content": "database",
+        "offset": 39,
+        "color": "#569CD6"
+      },
+      {
+        "content": ":",
+        "offset": 47,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 49,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "host",
+        "offset": 51,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 55,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "localhost",
+        "offset": 57,
+        "color": "#CE9178"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 67,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "port",
+        "offset": 69,
+        "color": "#569CD6"
+      },
+      {
+        "content": ": ",
+        "offset": 73,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "5432",
+        "offset": 75,
+        "color": "#B5CEA8"
+      }
+    ],
+    []
+  ]
+}

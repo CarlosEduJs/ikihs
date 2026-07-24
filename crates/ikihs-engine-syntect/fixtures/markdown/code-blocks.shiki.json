@@ -1,0 +1,131 @@
+{
+  "language": "markdown",
+  "tokens": [
+    [
+      {
+        "content": "# Code Examples",
+        "offset": 0,
+        "color": "#569CD6"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "```rust",
+        "offset": 17,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "fn",
+        "offset": 25,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 27,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "main",
+        "offset": 28,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "() {",
+        "offset": 32,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 37,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "println!",
+        "offset": 41,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 49,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"hello\"",
+        "offset": 50,
+        "color": "#CE9178"
+      },
+      {
+        "content": ");",
+        "offset": 57,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 60,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "```",
+        "offset": 62,
+        "color": "#D4D4D4"
+      }
+    ],
+    [],
+    [
+      {
+        "content": "```javascript",
+        "offset": 67,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "console",
+        "offset": 81,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ".",
+        "offset": 88,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "log",
+        "offset": 89,
+        "color": "#DCDCAA"
+      },
+      {
+        "content": "(",
+        "offset": 92,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"hello\"",
+        "offset": 93,
+        "color": "#CE9178"
+      },
+      {
+        "content": ");",
+        "offset": 100,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "```",
+        "offset": 103,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

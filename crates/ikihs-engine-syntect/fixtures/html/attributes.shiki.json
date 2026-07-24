@@ -1,0 +1,219 @@
+{
+  "language": "html",
+  "tokens": [
+    [
+      {
+        "content": "<",
+        "offset": 0,
+        "color": "#808080"
+      },
+      {
+        "content": "div",
+        "offset": 1,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 4,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "class",
+        "offset": 5,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 10,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"container\"",
+        "offset": 11,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 22,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "id",
+        "offset": 23,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 25,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"main\"",
+        "offset": 26,
+        "color": "#CE9178"
+      },
+      {
+        "content": ">",
+        "offset": 32,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 34,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "<",
+        "offset": 36,
+        "color": "#808080"
+      },
+      {
+        "content": "a",
+        "offset": 37,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 38,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "href",
+        "offset": 39,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 43,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"https://example.com\"",
+        "offset": 44,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 65,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "target",
+        "offset": 66,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 72,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"_blank\"",
+        "offset": 73,
+        "color": "#CE9178"
+      },
+      {
+        "content": ">",
+        "offset": 81,
+        "color": "#808080"
+      },
+      {
+        "content": "Link",
+        "offset": 82,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "</",
+        "offset": 86,
+        "color": "#808080"
+      },
+      {
+        "content": "a",
+        "offset": 88,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 89,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 91,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "<",
+        "offset": 93,
+        "color": "#808080"
+      },
+      {
+        "content": "input",
+        "offset": 94,
+        "color": "#569CD6"
+      },
+      {
+        "content": " ",
+        "offset": 99,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "type",
+        "offset": 100,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": "=",
+        "offset": 104,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"text\"",
+        "offset": 105,
+        "color": "#CE9178"
+      },
+      {
+        "content": " ",
+        "offset": 111,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "disabled",
+        "offset": 112,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": " ",
+        "offset": 120,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "/>",
+        "offset": 121,
+        "color": "#808080"
+      }
+    ],
+    [
+      {
+        "content": "</",
+        "offset": 124,
+        "color": "#808080"
+      },
+      {
+        "content": "div",
+        "offset": 126,
+        "color": "#569CD6"
+      },
+      {
+        "content": ">",
+        "offset": 129,
+        "color": "#808080"
+      }
+    ],
+    []
+  ]
+}

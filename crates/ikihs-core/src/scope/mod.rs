@@ -6,7 +6,7 @@ use std::fmt;
 
 pub type ScopeString = String;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ScopeCategory {
     Comment,
     Keyword,

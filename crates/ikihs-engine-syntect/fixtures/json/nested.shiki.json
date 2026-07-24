@@ -1,0 +1,181 @@
+{
+  "language": "json",
+  "tokens": [
+    [
+      {
+        "content": "{",
+        "offset": 0,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 2,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"user\"",
+        "offset": 4,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": {",
+        "offset": 10,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 14,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"name\"",
+        "offset": 18,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 24,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"Alice\"",
+        "offset": 26,
+        "color": "#CE9178"
+      },
+      {
+        "content": ",",
+        "offset": 33,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "    ",
+        "offset": 35,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"address\"",
+        "offset": 39,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": {",
+        "offset": 48,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "      ",
+        "offset": 52,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"city\"",
+        "offset": 58,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 64,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"Wonderland\"",
+        "offset": 66,
+        "color": "#CE9178"
+      },
+      {
+        "content": ",",
+        "offset": 78,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "      ",
+        "offset": 80,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"zip\"",
+        "offset": 86,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": ",
+        "offset": 91,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "12345",
+        "offset": 93,
+        "color": "#B5CEA8"
+      }
+    ],
+    [
+      {
+        "content": "    }",
+        "offset": 99,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  },",
+        "offset": 105,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "  ",
+        "offset": 110,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"tags\"",
+        "offset": 112,
+        "color": "#9CDCFE"
+      },
+      {
+        "content": ": [",
+        "offset": 118,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"admin\"",
+        "offset": 121,
+        "color": "#CE9178"
+      },
+      {
+        "content": ", ",
+        "offset": 128,
+        "color": "#D4D4D4"
+      },
+      {
+        "content": "\"editor\"",
+        "offset": 130,
+        "color": "#CE9178"
+      },
+      {
+        "content": "]",
+        "offset": 138,
+        "color": "#D4D4D4"
+      }
+    ],
+    [
+      {
+        "content": "}",
+        "offset": 140,
+        "color": "#D4D4D4"
+      }
+    ],
+    []
+  ]
+}

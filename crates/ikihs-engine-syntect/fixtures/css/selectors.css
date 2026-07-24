@@ -1,0 +1,13 @@
+.class-name {
+  color: red;
+  background-color: blue;
+}
+
+#unique-id {
+  margin: 0;
+  padding: 10px;
+}
+
+div span {
+  font-size: 14px;
+}

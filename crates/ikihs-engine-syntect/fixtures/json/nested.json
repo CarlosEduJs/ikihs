@@ -1,0 +1,10 @@
+{
+  "user": {
+    "name": "Alice",
+    "address": {
+      "city": "Wonderland",
+      "zip": 12345
+    }
+  },
+  "tags": ["admin", "editor"]
+}

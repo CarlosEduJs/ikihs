@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -24,13 +27,15 @@ jobs:
             crates/ikihs-core
             crates/ikihs-themes
             crates/ikihs-engine-syntect
+            crates/ikihs-engine-treesitter
+            crates/ikihs-engine-composite
             apps/ikihs-cli
 
       - run: cargo fmt --check
 
       - run: cargo clippy --all-targets -- -D warnings
 
-      - run: cargo test
+      - run: cargo test --workspace -- --nocapture
 
   js:
     runs-on: ubuntu-latest
