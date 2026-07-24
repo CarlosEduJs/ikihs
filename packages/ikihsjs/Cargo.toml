@@ -14,7 +14,7 @@ serde = { version = "1", features = ["derive"] }
 
 ikihs-core = { path = "../../crates/ikihs-core" }
 ikihs-themes = { path = "../../crates/ikihs-themes" }
-ikihs-engine-syntect = { path = "../../crates/ikihs-engine-syntect" }
+ikihs-engine-composite = { path = "../../crates/ikihs-engine-composite" }
 
 [build-dependencies]
 napi-build = "2"

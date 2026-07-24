@@ -7,7 +7,7 @@ use serde_json::json;
 
 use ikihs_core::engine::HighlightEngine;
 use ikihs_core::theme::Theme;
-use ikihs_engine_syntect::SyntectEngine;
+use ikihs_engine_composite::CompositeEngine;
 use ikihs_themes::vscode_theme::VscodeThemeParser;
 
 #[derive(Parser)]
@@ -68,7 +68,7 @@ fn cmd_highlight(source_path: Option<PathBuf>, lang: Option<String>, theme_path:
 
     let lang = lang.as_deref().unwrap_or("rs");
 
-    let engine = SyntectEngine::new();
+    let engine = CompositeEngine::new();
     let result = engine.highlight(&source, lang, &theme).unwrap_or_else(|e| {
         eprintln!("error: highlight failed: {}", e);
         std::process::exit(1);

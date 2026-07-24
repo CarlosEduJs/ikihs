@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use ikihs_core::engine::HighlightEngine;
 use ikihs_core::theme::Theme;
 use ikihs_engine_syntect::SyntectEngine;
+use ikihs_engine_treesitter::TreeSitterEngine;
 use ikihs_themes::vscode_theme::VscodeThemeParser;
 
 fn fixture_dir() -> PathBuf {
@@ -103,12 +104,16 @@ fn load_dark_plus_theme() -> Theme {
     VscodeThemeParser::parse_json(json).expect("failed to parse dark-plus theme")
 }
 
-fn run_fixture(_path: &str, source: &str, expected: &ShikiFixture) -> MatchResult {
-    let engine = SyntectEngine::new();
+fn run_fixture(path: &str, source: &str, expected: &ShikiFixture) -> MatchResult {
     let theme = load_dark_plus_theme();
-    let result = engine
-        .highlight(source, &expected.language, &theme)
-        .unwrap();
+    let use_treesitter = path.starts_with("typescript/") || path.starts_with("javascript/");
+    let lang = if path.starts_with("typescript/") { "typescript" } else if path.starts_with("javascript/") { "javascript" } else { &expected.language };
+    let result = if use_treesitter {
+        TreeSitterEngine::new().highlight(source, lang, &theme)
+    } else {
+        SyntectEngine::new().highlight(source, lang, &theme)
+    }
+    .unwrap();
 
     let ikihs_lines: Vec<Vec<ikihs_core::engine::HighlightToken>> =
         result.lines.iter().map(|l| l.tokens.clone()).collect();

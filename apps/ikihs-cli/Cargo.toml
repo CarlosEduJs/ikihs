@@ -9,6 +9,6 @@ repository = "https://github.com/CarlosEduJs/ikihs"
 [dependencies]
 ikihs-core = { path = "../../crates/ikihs-core" }
 ikihs-themes = { path = "../../crates/ikihs-themes" }
-ikihs-engine-syntect = { path = "../../crates/ikihs-engine-syntect" }
+ikihs-engine-composite = { path = "../../crates/ikihs-engine-composite" }
 clap = { version = "4", features = ["derive"] }
 serde_json.workspace = true

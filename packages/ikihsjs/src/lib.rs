@@ -4,7 +4,7 @@ use napi_derive::napi;
 
 use ikihs_core::engine::HighlightEngine;
 use ikihs_core::theme::Theme;
-use ikihs_engine_syntect::SyntectEngine;
+use ikihs_engine_composite::CompositeEngine;
 use ikihs_themes::vscode_theme::VscodeThemeParser;
 
 #[napi(object)]
@@ -25,7 +25,7 @@ pub struct JsThemedToken {
 
 #[napi]
 pub struct JsHighlighter {
-    engine: SyntectEngine,
+    engine: CompositeEngine,
     themes: HashMap<String, Theme>,
     loaded_languages: Vec<String>,
 }
@@ -44,7 +44,7 @@ impl JsHighlighter {
             themes.insert(name, theme);
         }
 
-        let engine = SyntectEngine::new();
+        let engine = CompositeEngine::new();
 
         for lang in &options.langs {
             if !engine.has_grammar(lang) {

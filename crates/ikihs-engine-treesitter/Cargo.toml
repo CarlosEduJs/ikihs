@@ -1,0 +1,19 @@
+[package]
+name = "ikihs-engine-treesitter"
+version = "0.0.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ikihs-core = { path = "../ikihs-core" }
+tree-sitter = "0.26"
+tree-sitter-javascript = "0.25"
+tree-sitter-typescript = "0.23"
+
+[dev-dependencies]
+ikihs-themes = { path = "../ikihs-themes" }
+serde.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+features = ["examples"]

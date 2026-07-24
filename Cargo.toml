@@ -4,6 +4,8 @@ members = [
   "crates/ikihs-core",
   "crates/ikihs-themes",
   "crates/ikihs-engine-syntect",
+  "crates/ikihs-engine-treesitter",
+  "crates/ikihs-engine-composite",
   "apps/ikihs-cli",
   "packages/ikihsjs",
 ]
