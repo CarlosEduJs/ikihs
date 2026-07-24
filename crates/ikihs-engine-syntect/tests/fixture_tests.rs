@@ -107,7 +107,13 @@ fn load_dark_plus_theme() -> Theme {
 fn run_fixture(path: &str, source: &str, expected: &ShikiFixture) -> MatchResult {
     let theme = load_dark_plus_theme();
     let use_treesitter = path.starts_with("typescript/") || path.starts_with("javascript/");
-    let lang = if path.starts_with("typescript/") { "typescript" } else if path.starts_with("javascript/") { "javascript" } else { &expected.language };
+    let lang = if path.starts_with("typescript/") {
+        "typescript"
+    } else if path.starts_with("javascript/") {
+        "javascript"
+    } else {
+        &expected.language
+    };
     let result = if use_treesitter {
         TreeSitterEngine::new().highlight(source, lang, &theme)
     } else {
@@ -121,7 +127,9 @@ fn run_fixture(path: &str, source: &str, expected: &ShikiFixture) -> MatchResult
 }
 
 fn load_fixture_source(fixture_path: &str) -> String {
-    for ext in &["rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml"] {
+    for ext in &[
+        "rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml",
+    ] {
         let path = fixture_dir().join(fixture_path).with_extension(ext);
         if path.exists() {
             return fs::read_to_string(&path).unwrap();

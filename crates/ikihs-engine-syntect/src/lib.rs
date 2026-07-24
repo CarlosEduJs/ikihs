@@ -65,8 +65,13 @@ impl HighlightEngine for SyntectEngine {
         let syntect_theme = convert_theme(theme)?;
         let highlighter = Highlighter::new(&syntect_theme);
 
-        let lines =
-            highlight_source(source, syntax, &highlighter, &self.syntax_set, &*self.mapper)?;
+        let lines = highlight_source(
+            source,
+            syntax,
+            &highlighter,
+            &self.syntax_set,
+            &*self.mapper,
+        )?;
 
         Ok(HighlightResult {
             lines,
@@ -99,8 +104,13 @@ impl SyntectEngine {
             .find_syntax_by_token("markdown")
             .ok_or_else(|| Error::GrammarNotFound("markdown".into()))?;
 
-        let mut all_lines =
-            highlight_source(source, md_syntax, &highlighter, &self.syntax_set, &*self.mapper)?;
+        let mut all_lines = highlight_source(
+            source,
+            md_syntax,
+            &highlighter,
+            &self.syntax_set,
+            &*self.mapper,
+        )?;
 
         for fence in &fences {
             if let Some(code_syntax) = self.syntax_set.find_syntax_by_token(&fence.language) {
@@ -207,7 +217,11 @@ fn parse_code_fences(source: &str) -> Vec<CodeFence> {
                         fences.push(CodeFence {
                             start_line: i + 1,
                             end_line: j,
-                            language: if lang.is_empty() { "bash".into() } else { lang.clone() },
+                            language: if lang.is_empty() {
+                                "bash".into()
+                            } else {
+                                lang.clone()
+                            },
                         });
                     }
                     i = j + 1;
@@ -318,7 +332,6 @@ fn compatibility_rules() -> Vec<ThemeItem> {
         // Shell flags: syntect scopes `-la` as variable.parameter.option (→ variable blue)
         // but Shiki colors them as keyword (#569CD6)
         (vec!["variable.parameter.option"], "#569CD6"),
-
     ];
 
     for (scopes, fg) in &pairs {

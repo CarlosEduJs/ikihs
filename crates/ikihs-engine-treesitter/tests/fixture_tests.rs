@@ -172,7 +172,12 @@ fn fixture_javascript_classes() {
 
 #[test]
 fn fixture_summary() {
-    let fixtures = ["typescript/types", "typescript/generics", "javascript/functions", "javascript/classes"];
+    let fixtures = [
+        "typescript/types",
+        "typescript/generics",
+        "javascript/functions",
+        "javascript/classes",
+    ];
     let theme = load_dark_plus_theme();
     let engine = TreeSitterEngine::new();
     let mut total_exact = 0;
@@ -198,11 +203,17 @@ fn fixture_summary() {
         let expected: ShikiFixture =
             serde_json::from_str(&fs::read_to_string(&expected_path).unwrap()).unwrap();
 
-        let result = engine.highlight(&source, lang_from_path(path), &theme).unwrap();
+        let result = engine
+            .highlight(&source, lang_from_path(path), &theme)
+            .unwrap();
         let ikihs_lines: Vec<Vec<ikihs_core::engine::HighlightToken>> =
             result.lines.iter().map(|l| l.tokens.clone()).collect();
         let r = compare_by_color(&source, &ikihs_lines, &expected.tokens);
-        let score = if r.total == 0 { 100 } else { (r.exact * 100) / r.total };
+        let score = if r.total == 0 {
+            100
+        } else {
+            (r.exact * 100) / r.total
+        };
 
         total_exact += r.exact;
         total_all += r.total;

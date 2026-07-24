@@ -1,25 +1,25 @@
+use ikihs_core::engine::HighlightEngine;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
-use ikihs_core::engine::HighlightEngine;
 
 fn main() {
     let dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap())
         .join("../../crates/ikihs-engine-syntect/fixtures");
-    
+
     let source = fs::read_to_string(dir.join("javascript/functions.js")).unwrap();
     let expected_json = fs::read_to_string(dir.join("javascript/functions.shiki.json")).unwrap();
     let expected: serde_json::Value = serde_json::from_str(&expected_json).unwrap();
     let theme_json = fs::read_to_string(dir.join("dark-plus.json")).unwrap();
     let theme = ikihs_themes::vscode_theme::VscodeThemeParser::parse_json(&theme_json).unwrap();
-    
+
     let engine = ikihs_engine_treesitter::TreeSitterEngine::new();
     let result = engine.highlight(&source, "javascript", &theme).unwrap();
-    
+
     let source_bytes = source.len();
     let mut ikihs = vec![""; source_bytes];
     let mut shiki = vec![""; source_bytes];
-    
+
     // Build ikihs colors
     let source_lines: Vec<&str> = source.lines().collect();
     let mut line_offset = 0;
@@ -35,7 +35,7 @@ fn main() {
             line_offset += line.len() + 1;
         }
     }
-    
+
     // Build shiki colors
     for line_tokens in expected["tokens"].as_array().unwrap() {
         for t in line_tokens.as_array().unwrap() {
@@ -47,14 +47,23 @@ fn main() {
             }
         }
     }
-    
+
     println!("Diffs for functions.js:");
     for pos in 0..source_bytes {
         let ik = ikihs[pos].to_lowercase();
         let sk = shiki[pos].to_lowercase();
         if ik != sk {
-            let ch = if source.as_bytes()[pos] == b' ' { '·' } else if source.as_bytes()[pos] == b'\n' { '⏎' } else { source.as_bytes()[pos] as char };
-            println!("  pos {:>3} ({:?}): engine={:<8} shiki={:<8}", pos, ch, ikihs[pos], shiki[pos]);
+            let ch = if source.as_bytes()[pos] == b' ' {
+                '·'
+            } else if source.as_bytes()[pos] == b'\n' {
+                '⏎'
+            } else {
+                source.as_bytes()[pos] as char
+            };
+            println!(
+                "  pos {:>3} ({:?}): engine={:<8} shiki={:<8}",
+                pos, ch, ikihs[pos], shiki[pos]
+            );
         }
     }
 }

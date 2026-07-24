@@ -3,11 +3,11 @@ mod mapper;
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-use ikihs_core::engine::{HighlightEngine, HighlightLine, HighlightResult, HighlightToken};
-use ikihs_core::scope::{Scope, ScopeCategory};
-use ikihs_core::scope::mapper::{BuiltinScopeMapper, ScopeMapper};
-use ikihs_core::theme::Theme;
 use ikihs_core::Error;
+use ikihs_core::engine::{HighlightEngine, HighlightLine, HighlightResult, HighlightToken};
+use ikihs_core::scope::mapper::{BuiltinScopeMapper, ScopeMapper};
+use ikihs_core::scope::{Scope, ScopeCategory};
+use ikihs_core::theme::Theme;
 use tree_sitter::{Node, Parser, TreeCursor};
 
 pub struct TreeSitterEngine {
@@ -20,8 +20,7 @@ pub struct TreeSitterEngine {
 impl TreeSitterEngine {
     pub fn new() -> Self {
         let mut p_js = Parser::new();
-        p_js
-            .set_language(&tree_sitter_javascript::LANGUAGE.into())
+        p_js.set_language(&tree_sitter_javascript::LANGUAGE.into())
             .expect("Failed to load JavaScript grammar");
 
         let mut p_jsx = Parser::new();
@@ -30,8 +29,7 @@ impl TreeSitterEngine {
             .expect("Failed to load JSX grammar");
 
         let mut p_ts = Parser::new();
-        p_ts
-            .set_language(&tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into())
+        p_ts.set_language(&tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into())
             .expect("Failed to load TypeScript grammar");
 
         let mut p_tsx = Parser::new();
@@ -66,7 +64,11 @@ impl TreeSitterEngine {
                         continue;
                     }
                     let dots = scope_str.matches('.').count();
-                    let cand = Candidate { dots, index: i, color: fg.clone() };
+                    let cand = Candidate {
+                        dots,
+                        index: i,
+                        color: fg.clone(),
+                    };
                     let better = best.get(&cat).map_or(true, |cur| {
                         cand.dots < cur.dots || (cand.dots == cur.dots && cand.index < cur.index)
                     });
@@ -77,15 +79,16 @@ impl TreeSitterEngine {
             }
         }
 
-        let mut map: HashMap<ScopeCategory, String> = best
-            .into_iter()
-            .map(|(k, v)| (k, v.color))
-            .collect();
+        let mut map: HashMap<ScopeCategory, String> =
+            best.into_iter().map(|(k, v)| (k, v.color)).collect();
 
-        map.entry(ScopeCategory::Operator).or_insert("#D4D4D4".into());
-        map.entry(ScopeCategory::Property).or_insert("#9CDCFE".into());
+        map.entry(ScopeCategory::Operator)
+            .or_insert("#D4D4D4".into());
+        map.entry(ScopeCategory::Property)
+            .or_insert("#9CDCFE".into());
         map.entry(ScopeCategory::Class).or_insert("#4EC9B0".into());
-        map.entry(ScopeCategory::Parameter).or_insert("#9CDCFE".into());
+        map.entry(ScopeCategory::Parameter)
+            .or_insert("#9CDCFE".into());
         map.insert(ScopeCategory::Constant, "#4FC1FF".into());
 
         map
@@ -102,9 +105,7 @@ impl TreeSitterEngine {
         for tc in theme.token_colors.iter().rev() {
             if let Some(ref fg) = tc.settings.foreground {
                 for theme_scope in &tc.scope {
-                    if target == *theme_scope
-                        || target.starts_with(&format!("{}.", theme_scope))
-                    {
+                    if target == *theme_scope || target.starts_with(&format!("{}.", theme_scope)) {
                         let dots = theme_scope.matches('.').count() as isize;
                         if dots > best_dots {
                             best_dots = dots;
@@ -236,8 +237,14 @@ fn emit_leaf(
     let field_name = cursor.field_name();
     let is_named = node.is_named();
 
-    let (mut category, mut scope_string) =
-        mapper::node_to_category(kind, text, parent_kind, grandparent_kind, field_name, is_named);
+    let (mut category, mut scope_string) = mapper::node_to_category(
+        kind,
+        text,
+        parent_kind,
+        grandparent_kind,
+        field_name,
+        is_named,
+    );
 
     if category == ScopeCategory::Variable && kind == "identifier" {
         if let Some(p) = parent.as_ref() {
@@ -259,9 +266,7 @@ fn emit_leaf(
     // Primary: scope-prefix match against the theme's token_colors.
     // Fallback: category-based color map.
     let color = TreeSitterEngine::lookup_scope_color(&scope_string, theme)
-        .or_else(|| {
-            color_map.get(&category).cloned()
-        })
+        .or_else(|| color_map.get(&category).cloned())
         .unwrap_or_else(|| "#D4D4D4".to_string());
 
     // Merge with previous token if same category and adjacent
@@ -288,12 +293,7 @@ struct FlatToken {
 }
 
 impl HighlightEngine for TreeSitterEngine {
-    fn highlight(
-        &self,
-        source: &str,
-        lang: &str,
-        theme: &Theme,
-    ) -> Result<HighlightResult, Error> {
+    fn highlight(&self, source: &str, lang: &str, theme: &Theme) -> Result<HighlightResult, Error> {
         let parser = match lang {
             "javascript" | "js" => &self.parser_javascript,
             "jsx" => &self.parser_jsx,
@@ -321,8 +321,12 @@ impl HighlightEngine for TreeSitterEngine {
 
     fn list_grammars(&self) -> Vec<String> {
         vec![
-            "javascript".into(), "js".into(), "jsx".into(),
-            "typescript".into(), "ts".into(), "tsx".into(),
+            "javascript".into(),
+            "js".into(),
+            "jsx".into(),
+            "typescript".into(),
+            "ts".into(),
+            "tsx".into(),
         ]
     }
 }
@@ -332,10 +336,7 @@ impl HighlightEngine for TreeSitterEngine {
 /// color (#D4D4D4) so that every byte position is covered by a token.
 /// Uses `source.lines()` to match the same line-splitting that the
 /// test comparison code uses, avoiding off-by-one errors with blank lines.
-fn split_into_highlight_lines(
-    flat: &[FlatToken],
-    source: &str,
-) -> Vec<HighlightLine> {
+fn split_into_highlight_lines(flat: &[FlatToken], source: &str) -> Vec<HighlightLine> {
     let source_lines: Vec<&str> = source.lines().collect();
     let num_lines = source_lines.len();
     let mut result: Vec<HighlightLine> = Vec::with_capacity(num_lines);
@@ -412,9 +413,7 @@ fn dedup_adjacent(tokens: &mut Vec<HighlightToken>) {
     }
     let mut i = 0;
     while i + 1 < tokens.len() {
-        if tokens[i].end >= tokens[i + 1].start
-            && tokens[i].color == tokens[i + 1].color
-        {
+        if tokens[i].end >= tokens[i + 1].start && tokens[i].color == tokens[i + 1].color {
             tokens[i].end = tokens[i + 1].end;
             tokens.remove(i + 1);
         } else {

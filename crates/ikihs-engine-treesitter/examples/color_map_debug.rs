@@ -1,7 +1,7 @@
-use std::collections::HashMap;
 use ikihs_core::scope::ScopeCategory;
 use ikihs_core::scope::mapper::{BuiltinScopeMapper, ScopeMapper};
 use ikihs_themes::vscode_theme::VscodeThemeParser;
+use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 
@@ -28,12 +28,20 @@ fn main() {
                     continue;
                 }
                 let dots = scope_str.matches('.').count();
-                let cand = Candidate { dots, index: i, color: fg.clone() };
+                let cand = Candidate {
+                    dots,
+                    index: i,
+                    color: fg.clone(),
+                };
                 let better = best.get(&cat).map_or(true, |cur| {
                     cand.dots < cur.dots || (cand.dots == cur.dots && cand.index < cur.index)
                 });
-                if true { // always print
-                    println!("  {:?} ← {} (dots={}, i={}) scope={}", cat, fg, dots, i, scope_str);
+                if true {
+                    // always print
+                    println!(
+                        "  {:?} ← {} (dots={}, i={}) scope={}",
+                        cat, fg, dots, i, scope_str
+                    );
                 }
                 if better {
                     best.insert(cat, cand);
@@ -44,6 +52,9 @@ fn main() {
 
     println!("\nFinal map:");
     for (cat, cand) in &best {
-        println!("  {:?} → {} (dots={}, i={})", cat, cand.color, cand.dots, cand.index);
+        println!(
+            "  {:?} → {} (dots={}, i={})",
+            cat, cand.color, cand.dots, cand.index
+        );
     }
 }

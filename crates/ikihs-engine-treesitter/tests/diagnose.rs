@@ -47,7 +47,12 @@ fn diagnose_color_map() {
                 if !matches!(cat, ScopeCategory::Other(_)) {
                     let old = color_map.insert(cat.clone(), fg.clone());
                     if old.is_none() || old.as_deref() != Some(fg.as_str()) {
-                        println!("  {:<20} → {:<8}  (scope: {})", format!("{:?}", cat), fg, scope_str);
+                        println!(
+                            "  {:<20} → {:<8}  (scope: {})",
+                            format!("{:?}", cat),
+                            fg,
+                            scope_str
+                        );
                     }
                 } else {
                     println!("  (unmapped scope: {})", scope_str);
@@ -107,7 +112,10 @@ fn diagnose_generic(fixture_name: &str) {
     }
 
     println!("\n── DIFF: typescript/{} ──", fixture_name);
-    println!("{:>4} {:>6} {:>8} {:>8}  {:<15}  match", "pos", "char", "shiki", "ikihs", "cat");
+    println!(
+        "{:>4} {:>6} {:>8} {:>8}  {:<15}  match",
+        "pos", "char", "shiki", "ikihs", "cat"
+    );
     for pos in 0..source_bytes {
         let ch = source[pos..].chars().next().unwrap();
         let is_match = ikihs_color[pos].eq_ignore_ascii_case(shiki_color[pos]);
@@ -176,7 +184,10 @@ fn diagnose_typescript_types() {
     }
 
     println!("\n── DIFF: typescript/types ──");
-    println!("{:>4} {:>6} {:>8} {:>8}  {:<15}  match", "pos", "char", "shiki", "ikihs", "cat");
+    println!(
+        "{:>4} {:>6} {:>8} {:>8}  {:<15}  match",
+        "pos", "char", "shiki", "ikihs", "cat"
+    );
     for pos in 0..source_bytes {
         let ch = source[pos..].chars().next().unwrap();
         let is_match = ikihs_color[pos].eq_ignore_ascii_case(shiki_color[pos]);

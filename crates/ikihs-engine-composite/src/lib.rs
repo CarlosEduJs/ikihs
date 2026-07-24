@@ -1,6 +1,6 @@
+use ikihs_core::Error;
 use ikihs_core::engine::{HighlightEngine, HighlightResult};
 use ikihs_core::theme::Theme;
-use ikihs_core::Error;
 use ikihs_engine_syntect::SyntectEngine;
 use ikihs_engine_treesitter::TreeSitterEngine;
 
@@ -19,12 +19,7 @@ impl CompositeEngine {
 }
 
 impl HighlightEngine for CompositeEngine {
-    fn highlight(
-        &self,
-        source: &str,
-        lang: &str,
-        theme: &Theme,
-    ) -> Result<HighlightResult, Error> {
+    fn highlight(&self, source: &str, lang: &str, theme: &Theme) -> Result<HighlightResult, Error> {
         match lang {
             "typescript" | "ts" | "tsx" => self.treesitter.highlight(source, lang, theme),
             _ => self.syntect.highlight(source, lang, theme),

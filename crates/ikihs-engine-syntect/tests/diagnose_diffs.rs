@@ -96,7 +96,9 @@ fn diagnose_fixture(path: &str) {
     let source_path = fixture_dir().join(path);
     let source_path = {
         let mut found = None;
-        for ext in &["rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml"] {
+        for ext in &[
+            "rs", "js", "py", "ts", "json", "css", "html", "sh", "md", "yaml",
+        ] {
             let p = source_path.with_extension(ext);
             if p.exists() {
                 found = Some(p);
