@@ -25,8 +25,8 @@ fn main() {
         for t in &line.tokens {
             let abs_start = line_offset + t.start;
             let abs_end = line_offset + t.end;
-            for i in abs_start..abs_end.min(source_bytes) {
-                engine_c[i] = &t.color;
+            for item in &mut engine_c[abs_start..abs_end.min(source_bytes)] {
+                *item = &t.color;
             }
         }
         if let Some(line) = source_lines.get(li) {
@@ -39,8 +39,8 @@ fn main() {
             let start = t["offset"].as_i64().unwrap() as usize;
             let end = start + t["content"].as_str().unwrap().len();
             let color = t["color"].as_str().unwrap();
-            for i in start..end.min(source_bytes) {
-                shiki_c[i] = color;
+            for item in &mut shiki_c[start..end.min(source_bytes)] {
+                *item = color;
             }
         }
     }

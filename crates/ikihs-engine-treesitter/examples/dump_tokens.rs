@@ -22,8 +22,8 @@ fn main() {
         for t in &line.tokens {
             let abs_start = line_offset + t.start;
             let abs_end = line_offset + t.end;
-            for i in abs_start..abs_end.min(source_bytes) {
-                c[i] = &t.color;
+            for item in &mut c[abs_start..abs_end.min(source_bytes)] {
+                *item = &t.color;
             }
         }
         if let Some(line) = source_lines.get(li) {

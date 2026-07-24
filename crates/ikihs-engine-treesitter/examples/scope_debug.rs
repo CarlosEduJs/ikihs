@@ -1,12 +1,9 @@
-use ikihs_core::scope::ScopeCategory;
-use ikihs_core::scope::mapper::{BuiltinScopeMapper, ScopeMapper};
 use ikihs_themes::vscode_theme::VscodeThemeParser;
-use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 
 fn lookup_scope_color(scope_str: &str, theme: &ikihs_core::theme::Theme) -> Option<String> {
-    let target = scope_str.split(' ').last().unwrap_or(scope_str);
+    let target = scope_str.split(' ').next_back().unwrap_or(scope_str);
     let mut best_dots: isize = -1;
     let mut best_color = None;
 

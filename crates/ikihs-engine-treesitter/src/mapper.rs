@@ -24,9 +24,7 @@ pub fn node_to_category(
             ScopeCategory::Property,
             "punctuation.separator.colon.property".into(),
         )
-    } else if text == "${" {
-        (ScopeCategory::Keyword, "source.ts keyword.template".into())
-    } else if text == "}" && parent_kind == Some("template_substitution") {
+    } else if text == "${" || (text == "}" && parent_kind == Some("template_substitution")) {
         (ScopeCategory::Keyword, "source.ts keyword.template".into())
     } else {
         anonymous_token(text)

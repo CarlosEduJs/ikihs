@@ -51,8 +51,8 @@ fn check_concrete_tokens() {
     // Check if position 9 is covered
     let mut covered = vec![false; source.len()];
     for (s, e) in &tokens {
-        for i in *s..*e {
-            covered[i] = true;
+        for item in &mut covered[*s..*e] {
+            *item = true;
         }
     }
 

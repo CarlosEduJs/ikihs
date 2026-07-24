@@ -33,7 +33,7 @@ fn main() {
                     index: i,
                     color: fg.clone(),
                 };
-                let better = best.get(&cat).map_or(true, |cur| {
+                let better = best.get(&cat).is_none_or(|cur| {
                     cand.dots < cur.dots || (cand.dots == cur.dots && cand.index < cur.index)
                 });
                 if true {

@@ -12,6 +12,7 @@ fn fixture_dir() -> PathBuf {
 
 #[derive(serde::Deserialize)]
 struct ShikiFixture {
+    #[expect(dead_code)]
     language: String,
     tokens: Vec<Vec<ShikiToken>>,
 }
@@ -138,11 +139,7 @@ fn run_fixture(path: &str) {
         result.lines.iter().map(|l| l.tokens.clone()).collect();
     let r = compare_by_color(&source, &ikihs_lines, &expected.tokens);
 
-    let score = if r.total == 0 {
-        100
-    } else {
-        (r.exact * 100) / r.total
-    };
+    let score = (r.exact * 100).checked_div(r.total).unwrap_or(100);
 
     println!(
         "  [{path}] score={score}% exact={} color={} total={}",
@@ -209,11 +206,7 @@ fn fixture_summary() {
         let ikihs_lines: Vec<Vec<ikihs_core::engine::HighlightToken>> =
             result.lines.iter().map(|l| l.tokens.clone()).collect();
         let r = compare_by_color(&source, &ikihs_lines, &expected.tokens);
-        let score = if r.total == 0 {
-            100
-        } else {
-            (r.exact * 100) / r.total
-        };
+        let score = (r.exact * 100).checked_div(r.total).unwrap_or(100);
 
         total_exact += r.exact;
         total_all += r.total;

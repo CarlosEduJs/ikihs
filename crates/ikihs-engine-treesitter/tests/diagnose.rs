@@ -21,6 +21,7 @@ fn load_dark_plus_theme() -> Theme {
 
 #[derive(serde::Deserialize)]
 struct ShikiFixture {
+    #[expect(dead_code)]
     language: String,
     tokens: Vec<Vec<ShikiToken>>,
 }
@@ -68,10 +69,10 @@ fn diagnose_color_map() {
 }
 
 fn diagnose_generic(fixture_name: &str) {
-    let source_path = fixture_dir().join(&format!("typescript/{}.ts", fixture_name));
+    let source_path = fixture_dir().join(format!("typescript/{}.ts", fixture_name));
     let source = fs::read_to_string(&source_path).unwrap();
 
-    let mut expected_path = fixture_dir().join(&format!("typescript/{}", fixture_name));
+    let mut expected_path = fixture_dir().join(format!("typescript/{}", fixture_name));
     expected_path.set_extension("shiki.json");
     let expected: ShikiFixture =
         serde_json::from_str(&fs::read_to_string(&expected_path).unwrap()).unwrap();

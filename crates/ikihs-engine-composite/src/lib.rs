@@ -18,6 +18,12 @@ impl CompositeEngine {
     }
 }
 
+impl Default for CompositeEngine {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl HighlightEngine for CompositeEngine {
     fn highlight(&self, source: &str, lang: &str, theme: &Theme) -> Result<HighlightResult, Error> {
         match lang {

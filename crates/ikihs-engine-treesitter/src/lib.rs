@@ -17,6 +17,12 @@ pub struct TreeSitterEngine {
     parser_tsx: Mutex<Parser>,
 }
 
+impl Default for TreeSitterEngine {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl TreeSitterEngine {
     pub fn new() -> Self {
         let mut p_js = Parser::new();
@@ -69,7 +75,7 @@ impl TreeSitterEngine {
                         index: i,
                         color: fg.clone(),
                     };
-                    let better = best.get(&cat).map_or(true, |cur| {
+                    let better = best.get(&cat).is_none_or(|cur| {
                         cand.dots < cur.dots || (cand.dots == cur.dots && cand.index < cur.index)
                     });
                     if better {
@@ -98,7 +104,7 @@ impl TreeSitterEngine {
     /// prefix matching.  Iterates in reverse (last-wins for same scope)
     /// and prefers the longest (most specific) matching theme scope.
     fn lookup_scope_color(scope_str: &str, theme: &Theme) -> Option<String> {
-        let target = scope_str.split(' ').last().unwrap_or(scope_str);
+        let target = scope_str.split(' ').next_back().unwrap_or(scope_str);
         let mut best_dots: isize = -1;
         let mut best_color = None;
 
@@ -181,9 +187,7 @@ fn visit_children(
 
         if kind == "template_string" || kind == "template_substitution" {
             visit_children(cursor, source, theme, color_map, tokens);
-        } else if ATOMIC_KINDS.contains(&kind) {
-            emit_leaf(node, cursor, source, theme, color_map, tokens);
-        } else if node.child_count() == 0 {
+        } else if ATOMIC_KINDS.contains(&kind) || node.child_count() == 0 {
             emit_leaf(node, cursor, source, theme, color_map, tokens);
         } else {
             visit_children(cursor, source, theme, color_map, tokens);
@@ -246,21 +250,17 @@ fn emit_leaf(
         is_named,
     );
 
-    if category == ScopeCategory::Variable && kind == "identifier" {
-        if let Some(p) = parent.as_ref() {
-            if p.kind() == "variable_declarator" {
-                if let Some(gp) = p.parent() {
-                    if gp.kind() == "lexical_declaration" {
-                        if let Some(first) = gp.child(0) {
-                            if &source[first.start_byte()..first.end_byte()] == "const" {
-                                category = ScopeCategory::Constant;
-                                scope_string = "source.ts variable.other.constant".into();
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    if category == ScopeCategory::Variable
+        && kind == "identifier"
+        && let Some(p) = parent.as_ref()
+        && p.kind() == "variable_declarator"
+        && let Some(gp) = p.parent()
+        && gp.kind() == "lexical_declaration"
+        && let Some(first) = gp.child(0)
+        && &source[first.start_byte()..first.end_byte()] == "const"
+    {
+        category = ScopeCategory::Constant;
+        scope_string = "source.ts variable.other.constant".into();
     }
 
     // Primary: scope-prefix match against the theme's token_colors.
@@ -270,11 +270,12 @@ fn emit_leaf(
         .unwrap_or_else(|| "#D4D4D4".to_string());
 
     // Merge with previous token if same category and adjacent
-    if let Some(last) = tokens.last_mut() {
-        if last.category == category && last.end == start {
-            last.end = end;
-            return;
-        }
+    if let Some(last) = tokens.last_mut()
+        && last.category == category
+        && last.end == start
+    {
+        last.end = end;
+        return;
     }
 
     tokens.push(FlatToken {
