@@ -27,7 +27,12 @@ function findSources(dir: string): string[] {
       results.push(...findSources(full));
     } else {
       const ext = extname(full).slice(1);
-      if (LANG_MAP[ext] && !full.endsWith(".shiki.json") && !full.endsWith(".expected.json") && !SKIP_FILES.has(basename(full))) {
+      if (
+        LANG_MAP[ext] &&
+        !full.endsWith(".shiki.json") &&
+        !full.endsWith(".expected.json") &&
+        !SKIP_FILES.has(basename(full))
+      ) {
         results.push(full);
       }
     }
