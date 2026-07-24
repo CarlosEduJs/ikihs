@@ -27,7 +27,9 @@ impl Default for CompositeEngine {
 impl HighlightEngine for CompositeEngine {
     fn highlight(&self, source: &str, lang: &str, theme: &Theme) -> Result<HighlightResult, Error> {
         match lang {
-            "typescript" | "ts" | "tsx" => self.treesitter.highlight(source, lang, theme),
+            "typescript" | "ts" | "tsx" | "javascript" | "js" | "jsx" => {
+                self.treesitter.highlight(source, lang, theme)
+            }
             _ => self.syntect.highlight(source, lang, theme),
         }
     }

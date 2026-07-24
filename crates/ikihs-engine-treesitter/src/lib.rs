@@ -128,12 +128,13 @@ impl TreeSitterEngine {
     fn walk_tree(
         root: Node,
         source: &str,
+        lang: &str,
         theme: &Theme,
         color_map: &HashMap<ScopeCategory, String>,
     ) -> Vec<FlatToken> {
         let mut tokens = Vec::new();
         let mut cursor = root.walk();
-        visit_children(&mut cursor, source, theme, color_map, &mut tokens);
+        visit_children(&mut cursor, source, lang, theme, color_map, &mut tokens);
         tokens
     }
 }
@@ -153,6 +154,7 @@ const ATOMIC_KINDS: &[&str] = &[
 fn visit_children(
     cursor: &mut TreeCursor,
     source: &str,
+    lang: &str,
     theme: &Theme,
     color_map: &HashMap<ScopeCategory, String>,
     tokens: &mut Vec<FlatToken>,
@@ -186,11 +188,11 @@ fn visit_children(
         let kind = node.kind();
 
         if kind == "template_string" || kind == "template_substitution" {
-            visit_children(cursor, source, theme, color_map, tokens);
+            visit_children(cursor, source, lang, theme, color_map, tokens);
         } else if ATOMIC_KINDS.contains(&kind) || node.child_count() == 0 {
-            emit_leaf(node, cursor, source, theme, color_map, tokens);
+            emit_leaf(node, cursor, source, lang, theme, color_map, tokens);
         } else {
-            visit_children(cursor, source, theme, color_map, tokens);
+            visit_children(cursor, source, lang, theme, color_map, tokens);
         }
 
         if !cursor.goto_next_sibling() {
@@ -223,6 +225,7 @@ fn emit_leaf(
     node: Node,
     cursor: &TreeCursor,
     source: &str,
+    lang: &str,
     theme: &Theme,
     color_map: &HashMap<ScopeCategory, String>,
     tokens: &mut Vec<FlatToken>,
@@ -250,6 +253,11 @@ fn emit_leaf(
         is_named,
     );
 
+    let is_js = lang == "javascript" || lang == "js" || lang == "jsx";
+    if is_js {
+        scope_string = scope_string.replace("source.ts", "source.js");
+    }
+
     if category == ScopeCategory::Variable
         && kind == "identifier"
         && let Some(p) = parent.as_ref()
@@ -260,7 +268,11 @@ fn emit_leaf(
         && &source[first.start_byte()..first.end_byte()] == "const"
     {
         category = ScopeCategory::Constant;
-        scope_string = "source.ts variable.other.constant".into();
+        scope_string = if is_js {
+            "source.js variable.other.constant".into()
+        } else {
+            "source.ts variable.other.constant".into()
+        };
     }
 
     // Primary: scope-prefix match against the theme's token_colors.
@@ -311,7 +323,7 @@ impl HighlightEngine for TreeSitterEngine {
             .parse(source, None)
             .ok_or_else(|| Error::Engine("tree-sitter parse failed".into()))?;
 
-        let flat = Self::walk_tree(tree.root_node(), source, theme, &color_map);
+        let flat = Self::walk_tree(tree.root_node(), source, lang, theme, &color_map);
         let lines = split_into_highlight_lines(&flat, source);
 
         Ok(HighlightResult {
