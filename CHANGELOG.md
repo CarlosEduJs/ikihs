@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2026-07-24)
+
+### Minor Changes
+
+
+- **ikihs-core** (v0.1.0): Added `Hash` derive for `ScopeCategory`
+- **ikihs-engine-treesitter** (v0.1.0): Added a new Tree-sitter highlighting engine for JavaScript, TypeScript, JSX, and TSX with byte-for-byte compatibility against the current Shiki fixtures
+- **ikihs-engine-composite** (v0.3.0): Added a composite highlighting engine that routes JavaScript/TypeScript family languages to Tree-sitter and all other languages to Syntect
+- **ikihs-engine-syntect** (v0.1.0): Updated fixtures and test runner to validate JavaScript/TypeScript using the Tree-sitter engine
+- **ikihs-cli** (v0.3.0): Switched the default highlighting engine from `SyntectEngine` to `CompositeEngine`
+- **ikihsjs** (v0.3.0): Switched to `CompositeEngine` and rebuilt npm packages for all supported platforms
+
+
 ## 0.2.0 (2026-07-23)
 
 ### Minor Changes
