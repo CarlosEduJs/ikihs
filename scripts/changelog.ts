@@ -64,7 +64,7 @@ function parseFrontmatter(content: string): { fm: Record<string, unknown>; body:
 function readChanges(): { files: string[]; entries: ChangeEntry[] } {
   if (!existsSync(CHANGES_DIR)) return { files: [], entries: [] };
   const files = readdirSync(CHANGES_DIR)
-    .filter((f) => f.endsWith(".md") && f !== ".gitkeep")
+    .filter((f) => f.endsWith(".md") && f !== ".gitkeep" && f !== "README.md")
     .sort();
   const entries = files.map((f) => {
     const content = readFileSync(join(CHANGES_DIR, f), "utf-8");
@@ -140,21 +140,34 @@ function writeNpmVersion(pkgJson: string, version: string) {
   console.log(`  ${pkgJson} → ${version}`);
 }
 
-function buildChangelogEntries(entries: ChangeEntry[], version: string): string {
+function buildChangelogEntries(
+  entries: ChangeEntry[],
+  version: string,
+  pkgVersions: Record<string, string> = {},
+): string {
   const lines: string[] = [`## ${version} (${dateStr()})\n`];
   const groups: Record<string, string[]> = { Major: [], Minor: [], Patch: [] };
   for (const e of entries) {
     const group = e.bump === "major" ? "Major" : e.bump === "minor" ? "Minor" : "Patch";
-    const pkg = e.packages.length ? `#### ${e.packages.join(", ")} - v${version}\n\n` : "";
-    groups[group]!.push(`${pkg}- ${e.body}`);
+    let body = e.body.replace(/\{version\}/g, version);
+    for (const [pkg, pkgVer] of Object.entries(pkgVersions)) {
+      body = body.replace(new RegExp(`\\{version:${escapeRegex(pkg)}\\}`, "g"), pkgVer);
+    }
+    groups[group]!.push(body);
   }
   for (const g of ["Major", "Minor", "Patch"] as const) {
     if (groups[g]!.length) {
       lines.push(`### ${g} Changes\n\n`);
-      lines.push(...groups[g]!.map((l) => l + "\n\n"));
+      for (const content of groups[g]!) {
+        lines.push(content + "\n\n");
+      }
     }
   }
   return lines.join("\n");
+}
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function updateChangelog(newSection: string) {
@@ -207,6 +220,43 @@ async function cmdAdd() {
   console.log(`\nCreated: .changes/${ts}.md`);
 }
 
+/// Registry of all known packages and their version file(s).
+const PACKAGE_REGISTRY: Record<string, string[]> = {
+  // Workspace Cargo crates (bumped via workspace root Cargo.toml)
+  "ikihs-cli": ["__workspace__"],
+  "ikihs-engine-composite": ["__workspace__"],
+
+  // Individual Cargo crates (hardcoded version in their own Cargo.toml)
+  "ikihs-core": ["crates/ikihs-core/Cargo.toml"],
+  "ikihs-themes": ["crates/ikihs-themes/Cargo.toml"],
+  "ikihs-engine-syntect": ["crates/ikihs-engine-syntect/Cargo.toml"],
+  "ikihs-engine-treesitter": ["crates/ikihs-engine-treesitter/Cargo.toml"],
+
+  // npm packages
+  ikihsjs: ["packages/ikihsjs/Cargo.toml", "packages/ikihsjs/package.json"],
+  "@ikihs/compare": ["packages/ikihs-compare/package.json"],
+};
+
+function readCrateVersion(cargoPath: string): string {
+  const raw = readFileSync(join(ROOT, cargoPath), "utf-8");
+  const doc = parseToml(raw) as { package?: { version?: string } };
+  const version = doc.package?.version;
+  if (!version) throw new Error(`Could not read version from ${cargoPath}`);
+  return version;
+}
+
+function writeCrateVersion(cargoPath: string, version: string) {
+  const fullPath = join(ROOT, cargoPath);
+  const raw = readFileSync(fullPath, "utf-8");
+  const doc = parseToml(raw) as Record<string, unknown>;
+  const pkg = doc.package as Record<string, unknown> | undefined;
+  if (pkg) {
+    pkg.version = version;
+    writeFileSync(fullPath, stringifyToml(doc));
+    console.log(`  ${cargoPath} → ${version}`);
+  }
+}
+
 function cmdVersion() {
   const { files, entries } = readChanges();
   if (!files.length) {
@@ -219,32 +269,70 @@ function cmdVersion() {
     "patch" as "patch" | "minor" | "major",
   );
 
+  // Determine which packages to bump
   const allPkgs = entries.some((e) => !e.packages.length);
-  const affectedNpmPkgs: string[] = allPkgs
-    ? ["packages/ikihsjs/package.json", "packages/ikihs-compare/package.json"]
-    : [...new Set(entries.flatMap((e) => e.packages))].flatMap((name) => {
-        if (name === "ikihsjs") return ["packages/ikihsjs/package.json"];
-        if (name === "@ikihs/compare") return ["packages/ikihs-compare/package.json"];
-        return [];
-      });
+  const requestedNames: string[] = allPkgs
+    ? Object.keys(PACKAGE_REGISTRY)
+    : [...new Set(entries.flatMap((e) => e.packages))];
 
-  const cargoVersion = readCargoVersion();
-  const newCargoVersion = bumpSemver(cargoVersion, maxBump);
-  writeCargoVersion(newCargoVersion);
-
-  for (const pkgJson of affectedNpmPkgs) {
-    const fullPath = join(ROOT, pkgJson);
-    const oldVer = readNpmVersion(fullPath);
-    const newVer = bumpSemver(oldVer, maxBump);
-    writeNpmVersion(fullPath, newVer);
+  // Compute new version for each requested package (before writing)
+  const pkgVersions: Record<string, string> = {};
+  for (const name of requestedNames) {
+    const pkgFiles = PACKAGE_REGISTRY[name];
+    if (!pkgFiles || !pkgFiles.length) continue;
+    // Use the last version file as the display version
+    // (npm package.json for ikihsjs, own Cargo.toml for crates)
+    const lastFile = pkgFiles[pkgFiles.length - 1]!;
+    if (lastFile === "__workspace__") {
+      pkgVersions[name] = bumpSemver(readCargoVersion(), maxBump);
+    } else if (lastFile.endsWith(".json")) {
+      pkgVersions[name] = bumpSemver(readNpmVersion(join(ROOT, lastFile)), maxBump);
+    } else {
+      pkgVersions[name] = bumpSemver(readCrateVersion(lastFile), maxBump);
+    }
   }
 
-  const section = buildChangelogEntries(entries, newCargoVersion);
+  // Build changelog with version placeholders resolved
+  const cargoVersion = readCargoVersion();
+  const newCargoVersion = bumpSemver(cargoVersion, maxBump);
+  const section = buildChangelogEntries(entries, newCargoVersion, pkgVersions);
   updateChangelog(section);
+
+  // Always bump workspace version (affects ikihs-cli + ikihs-engine-composite)
+  writeCargoVersion(newCargoVersion);
+
+  // Bump individual version files for requested packages
+  for (const name of requestedNames) {
+    const files = PACKAGE_REGISTRY[name];
+    if (!files) {
+      console.warn(`  warning: unknown package "${name}" — skipping`);
+      continue;
+    }
+    for (const f of files) {
+      if (f === "__workspace__") continue; // already bumped above
+      if (f.endsWith(".json")) {
+        const fullPath = join(ROOT, f);
+        const oldVer = readNpmVersion(fullPath);
+        const newVer = bumpSemver(oldVer, maxBump);
+        writeNpmVersion(fullPath, newVer);
+      } else {
+        const oldVer = readCrateVersion(f);
+        const newVer = bumpSemver(oldVer, maxBump);
+        writeCrateVersion(f, newVer);
+      }
+    }
+  }
 
   deleteChanges(files);
   console.log(`\nDeleted ${files.length} changelog file(s)`);
   console.log(`\nDone. Workspace: ${cargoVersion} → ${newCargoVersion}`);
+
+  if (allPkgs) {
+    const bumped = Object.keys(PACKAGE_REGISTRY).join(", ");
+    console.log(`  Packages bumped: ${bumped}`);
+  } else {
+    console.log(`  Packages bumped: ${requestedNames.join(", ")}`);
+  }
 }
 
 async function cmdPublish() {
