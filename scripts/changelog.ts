@@ -275,11 +275,17 @@ function cmdVersion() {
     ? Object.keys(PACKAGE_REGISTRY)
     : [...new Set(entries.flatMap((e) => e.packages))];
 
+  // Validate requested package names before any mutation
+  const unknownNames = requestedNames.filter((name) => !(name in PACKAGE_REGISTRY));
+  if (unknownNames.length > 0) {
+    console.error(`error: unknown package(s): ${unknownNames.join(", ")}`);
+    process.exit(1);
+  }
+
   // Compute new version for each requested package (before writing)
   const pkgVersions: Record<string, string> = {};
   for (const name of requestedNames) {
-    const pkgFiles = PACKAGE_REGISTRY[name];
-    if (!pkgFiles || !pkgFiles.length) continue;
+    const pkgFiles = PACKAGE_REGISTRY[name]!;
     // Use the last version file as the display version
     // (npm package.json for ikihsjs, own Cargo.toml for crates)
     const lastFile = pkgFiles[pkgFiles.length - 1]!;

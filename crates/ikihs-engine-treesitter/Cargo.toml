@@ -14,6 +14,3 @@ tree-sitter-typescript = "0.23"
 ikihs-themes = { path = "../ikihs-themes" }
 serde.workspace = true
 serde_json.workspace = true
-
-[package.metadata.docs.rs]
-features = ["examples"]

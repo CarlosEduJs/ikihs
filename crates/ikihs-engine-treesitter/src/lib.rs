@@ -281,9 +281,10 @@ fn emit_leaf(
         .or_else(|| color_map.get(&category).cloned())
         .unwrap_or_else(|| "#D4D4D4".to_string());
 
-    // Merge with previous token if same category and adjacent
+    // Merge with previous token if same category, color, and adjacent
     if let Some(last) = tokens.last_mut()
         && last.category == category
+        && last.color == color
         && last.end == start
     {
         last.end = end;
@@ -354,12 +355,19 @@ fn split_into_highlight_lines(flat: &[FlatToken], source: &str) -> Vec<Highlight
     let num_lines = source_lines.len();
     let mut result: Vec<HighlightLine> = Vec::with_capacity(num_lines);
 
-    // Build line→byte-offset table matching source.lines() traversal
+    // Build line→byte-offset table matching source.lines() traversal.
+    // Accounts for both LF (\n) and CRLF (\r\n) line endings.
     let mut line_offsets: Vec<usize> = Vec::with_capacity(num_lines);
     let mut offset = 0;
     for line_text in &source_lines {
         line_offsets.push(offset);
-        offset += line_text.len() + 1;
+        offset += line_text.len();
+        if offset < source.len() && source.as_bytes()[offset] == b'\r' {
+            offset += 1;
+        }
+        if offset < source.len() && source.as_bytes()[offset] == b'\n' {
+            offset += 1;
+        }
     }
 
     for (li, line_text) in source_lines.iter().enumerate() {
@@ -368,9 +376,9 @@ fn split_into_highlight_lines(flat: &[FlatToken], source: &str) -> Vec<Highlight
         let mut pairs: Vec<(usize, usize, String)> = Vec::new();
 
         for token in flat {
-            if token.start >= line_pos && token.start < line_pos + line_len {
-                let rel_start = token.start - line_pos;
-                let rel_end = line_len.min(token.end - line_pos);
+            if token.start < line_pos + line_len && token.end > line_pos {
+                let rel_start = token.start.saturating_sub(line_pos);
+                let rel_end = line_len.min(token.end.saturating_sub(line_pos));
                 if rel_start < rel_end {
                     pairs.push((rel_start, rel_end, token.color.clone()));
                 }

@@ -28,9 +28,6 @@ struct MatchResult {
     total: usize,
     exact: usize,
     color_diff: usize,
-    offset_diff: usize,
-    missing_ikihs: usize,
-    extra: usize,
 }
 
 /// Compare colors byte-by-byte across the entire source.
@@ -93,9 +90,6 @@ fn compare_by_color(
         total,
         exact,
         color_diff,
-        offset_diff: 0,
-        missing_ikihs: 0,
-        extra: 0,
     }
 }
 
@@ -162,13 +156,8 @@ fn fixture_rust_hello() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -181,13 +170,8 @@ fn fixture_rust_comments() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -200,13 +184,8 @@ fn fixture_javascript_functions() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -219,13 +198,8 @@ fn fixture_javascript_classes() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -238,13 +212,8 @@ fn fixture_python_functions() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -257,13 +226,8 @@ fn fixture_python_decorators() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -276,13 +240,8 @@ fn fixture_edge_empty() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert_eq!(s, 100, "empty file should match perfectly");
 }
@@ -295,13 +254,8 @@ fn fixture_edge_single_line() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -314,13 +268,8 @@ fn fixture_edge_only_comments() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -333,13 +282,8 @@ fn fixture_typescript_types() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
 }
@@ -352,13 +296,8 @@ fn fixture_typescript_generics() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 70, "fixture {path} score too low: {s}% (min 70%)");
 }
@@ -371,13 +310,8 @@ fn fixture_json_object() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 80, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -390,13 +324,8 @@ fn fixture_json_nested() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 50, "fixture {path} score too low: {s}% (min 50%)");
 }
@@ -409,13 +338,8 @@ fn fixture_css_selectors() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -428,13 +352,8 @@ fn fixture_css_at_rules() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -447,13 +366,8 @@ fn fixture_html_tags() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -466,13 +380,8 @@ fn fixture_html_attributes() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -485,13 +394,8 @@ fn fixture_shell_commands() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -504,13 +408,8 @@ fn fixture_shell_vars() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -523,13 +422,8 @@ fn fixture_markdown_headers() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -542,13 +436,8 @@ fn fixture_markdown_code_blocks() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 80, "fixture {path} score too low: {s}% (min 80%)");
 }
@@ -561,13 +450,8 @@ fn fixture_yaml_keys_values() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -580,13 +464,8 @@ fn fixture_yaml_nested() {
     let result = run_fixture(path, &source, &expected);
     let s = score(&result);
     println!(
-        "  [{path}] score={s}% exact={} color={} offset={} extra={} missing={} total={}",
-        result.exact,
-        result.color_diff,
-        result.offset_diff,
-        result.extra,
-        result.missing_ikihs,
-        result.total
+        "  [{path}] score={s}% exact={} color={} total={}",
+        result.exact, result.color_diff, result.total
     );
     assert!(s >= 60, "fixture {path} score too low: {s}% (min 60%)");
 }
@@ -632,15 +511,8 @@ fn fixture_summary() {
         total_exact += result.exact;
         total_all += result.total;
         println!(
-            "  {:<35} {:3}%  exact={:<3} color={:<3} offset={:<3} extra={:<3} missing={:<3} total={}",
-            path,
-            s,
-            result.exact,
-            result.color_diff,
-            result.offset_diff,
-            result.extra,
-            result.missing_ikihs,
-            result.total
+            "  {:<35} {:3}%  exact={:<3} color={:<3} total={}",
+            path, s, result.exact, result.color_diff, result.total
         );
     }
 

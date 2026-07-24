@@ -109,7 +109,7 @@ fn source_ext_for_path(path: &str) -> &[&str] {
     }
 }
 
-fn run_fixture(path: &str) {
+fn run_fixture(path: &str, min_score: usize) {
     let source_path = {
         let dir = fixture_dir().join(path);
         let mut found = None;
@@ -145,26 +145,30 @@ fn run_fixture(path: &str) {
         "  [{path}] score={score}% exact={} color={} total={}",
         r.exact, r.color_diff, r.total
     );
+    assert!(
+        score >= min_score,
+        "fixture {path} score too low: {score}% (min {min_score}%)"
+    );
 }
 
 #[test]
 fn fixture_typescript_types() {
-    run_fixture("typescript/types");
+    run_fixture("typescript/types", 50);
 }
 
 #[test]
 fn fixture_typescript_generics() {
-    run_fixture("typescript/generics");
+    run_fixture("typescript/generics", 70);
 }
 
 #[test]
 fn fixture_javascript_functions() {
-    run_fixture("javascript/functions");
+    run_fixture("javascript/functions", 60);
 }
 
 #[test]
 fn fixture_javascript_classes() {
-    run_fixture("javascript/classes");
+    run_fixture("javascript/classes", 60);
 }
 
 #[test]

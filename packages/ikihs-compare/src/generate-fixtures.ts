@@ -9,7 +9,7 @@ const SKIP_FILES = new Set(["dark-plus.json"]);
 const LANG_MAP: Record<string, string> = {
   rs: "rust",
   js: "javascript",
-  ts: "javascript",
+  ts: "typescript",
   py: "python",
   css: "css",
   html: "html",

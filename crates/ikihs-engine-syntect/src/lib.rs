@@ -1,4 +1,3 @@
-use std::path::Path;
 use std::str::FromStr;
 
 use ikihs_core::Error;
@@ -36,12 +35,7 @@ impl SyntectEngine {
     }
 
     fn build_syntax_set() -> SyntaxSet {
-        let mut builder = SyntaxSet::load_defaults_newlines().into_builder();
-        let grammar_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("grammars");
-        if grammar_dir.exists() {
-            let _ = builder.add_from_folder(&grammar_dir, true);
-        }
-        builder.build()
+        SyntaxSet::load_defaults_newlines()
     }
 }
 
